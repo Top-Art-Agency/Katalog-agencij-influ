@@ -238,6 +238,1598 @@
     transition:max-height 0.25s ease;
   }
   .item.open .item-body{max-height:1400px;}
+  #rankAccordion.item.open .item-body, #creatorsAccordion.item.open .item-body{max-height:20000px;}
+
+  .tile-close{
+    display:none;
+    flex-shrink:0;
+    width:28px; height:28px;
+    border-radius:50%;
+    align-items:center;
+    justify-content:center;
+    background:var(--panel2);
+    color:var(--muted);
+    font-size:0.85rem;
+    font-weight:700;
+  }
+  .tile-close:hover{background:var(--grad); color:#fff;}
+
+  .item.tile.expanded{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:min(560px, 92vw);
+    max-height:85vh;
+    z-index:1001;
+    box-shadow:0 24px 60px rgba(43,27,51,0.35);
+    cursor:default;
+    border-color:transparent;
+    background:
+      linear-gradient(var(--panel), var(--panel)) padding-box,
+      var(--grad) border-box;
+    overflow-y:auto;
+  }
+  .item.tile.expanded:hover{transform:translate(-50%,-50%);}
+  .item.tile.expanded .item-body{
+    max-height:none;
+    overflow:visible;
+  }
+  .item.tile.expanded .tile-close{display:flex;}
+  .item.tile.expanded .item-head{position:sticky; top:0; background:var(--panel); z-index:2;}
+
+  .tile-backdrop{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(43,27,51,0.55);
+    backdrop-filter:blur(2px);
+    z-index:1000;
+  }
+  .tile-backdrop.show{display:block;}
+  body.modal-open{overflow:hidden;}
+
+  .item-body-inner{
+    padding:0 20px 22px;
+    border-top:2px dashed var(--border);
+    margin-top:0;
+    padding-top:16px;
+  }
+
+  .item-body p.desc{margin:0 0 14px; font-size:0.92rem; color:#5b4a63;}
+
+  .facts{
+    display:grid;
+    grid-template-columns:150px 1fr;
+    gap:9px 14px;
+    font-size:0.86rem;
+    margin-bottom:14px;
+  }
+  .facts dt{color:var(--purple); font-weight:700;}
+  .facts dd{margin:0; color:var(--text);}
+
+  .contact-box{
+    background:var(--panel2);
+    border-radius:16px;
+    padding:13px 16px;
+    font-size:0.86rem;
+    margin-bottom:12px;
+    border:1px solid var(--border);
+  }
+  .contact-box div{margin:3px 0;}
+  .contact-box a{color:var(--accent); text-decoration:none; font-weight:600;}
+  .contact-box a:hover{text-decoration:underline;}
+
+  .src{
+    font-size:0.76rem;
+    color:var(--muted);
+  }
+  .src a{color:var(--blue); text-decoration:none; font-weight:600;}
+  .src a:hover{text-decoration:underline;}
+
+  .no-data{
+    font-style:italic;
+    color:#b0a0b8;
+  }
+
+  footer{
+    text-align:center;
+    padding:28px 24px 60px;
+    color:var(--muted);
+    font-size:0.82rem;
+    border-top:2px solid var(--border);
+  }
+
+  @media (max-width:520px){
+    .facts{grid-template-columns:1fr;}
+    .facts dt{margin-top:6px;}
+  }
+
+  /* RANKING TABLE */
+  .rank-note{
+    background:#EEF0FE;
+    border:2px solid #D9DCFB;
+    border-radius:16px;
+    padding:15px 18px;
+    font-size:0.86rem;
+    color:#4a4f8a;
+    margin-bottom:16px;
+  }
+  .rank-search{
+    width:100%;
+    padding:12px 16px;
+    border-radius:100px;
+    border:2px solid var(--border);
+    background:var(--panel);
+    color:var(--text);
+    font-size:0.92rem;
+    font-weight:500;
+    margin-bottom:14px;
+  }
+  .rank-search:focus{outline:none; border-color:var(--accent);}
+  table.rank-table{
+    width:100%;
+    border-collapse:separate;
+    border-spacing:0;
+    background:var(--panel);
+    border:2px solid var(--border);
+    border-radius:18px;
+    overflow:hidden;
+    font-size:0.86rem;
+  }
+  table.rank-table thead th{
+    text-align:left;
+    padding:12px 14px;
+    background:var(--grad);
+    color:#fff;
+    font-weight:700;
+    font-size:0.76rem;
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+  }
+  table.rank-table tbody td{
+    padding:10px 14px;
+    border-top:1px solid var(--border);
+    vertical-align:middle;
+  }
+  table.rank-table tbody tr:nth-child(even){background:#FFFBFD;}
+  table.rank-table tbody tr:hover{background:var(--panel2);}
+  table.rank-table td.rank-num{
+    width:34px;
+    text-align:center;
+    font-weight:800;
+    background:var(--grad);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    font-size:0.95rem;
+  }
+  table.rank-table td.rank-followers{color:var(--good); font-weight:700; font-variant-numeric:tabular-nums;}
+  table.rank-table td.rank-handle a{color:var(--accent); text-decoration:none; font-weight:600;}
+  table.rank-table td.rank-handle a:hover{text-decoration:underline;}
+  table.rank-table td.rank-eng{color:var(--muted); white-space:nowrap;}
+  .rank-table-wrap{overflow-x:auto; border-radius:18px;}
+
+  .platform-tabs{
+    display:flex;
+    gap:8px;
+    margin-bottom:16px;
+    flex-wrap:wrap;
+  }
+  .platform-tab{
+    font-family:'Inter', sans-serif;
+    font-size:0.85rem;
+    font-weight:700;
+    padding:9px 18px;
+    border-radius:100px;
+    border:2px solid var(--border);
+    background:var(--panel2);
+    color:var(--text);
+    cursor:pointer;
+    transition:0.15s;
+  }
+  .platform-tab:hover{border-color:var(--accent);}
+  .platform-tab.active{
+    background:var(--grad);
+    border-color:transparent;
+    color:#fff;
+  }
+
+  /* Responsive: stack table rows as cards below 760px instead of clipping/hiding columns */
+  @media (max-width:760px){
+    table.rank-table thead{display:none;}
+    table.rank-table, table.rank-table tbody, table.rank-table tr, table.rank-table td{
+      display:block;
+      width:100%;
+    }
+    table.rank-table{border-collapse:collapse;}
+    table.rank-table tbody tr{
+      padding:12px 14px 14px;
+      border-top:1px solid var(--border);
+    }
+    table.rank-table tbody tr:first-child{border-top:none;}
+    table.rank-table tbody td{
+      padding:3px 0;
+      border-top:none;
+      white-space:normal;
+    }
+    table.rank-table td.rank-num{
+      text-align:left;
+      font-size:1.05rem;
+    }
+    table.rank-table td::before{
+      content: attr(data-label);
+      display:block;
+      font-size:0.68rem;
+      font-weight:800;
+      color:var(--purple);
+      text-transform:uppercase;
+      letter-spacing:0.04em;
+      margin-bottom:1px;
+    }
+    table.rank-table td:empty{display:none;}
+  }
+
+  /* CREATOR TILES */
+  .creator-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));
+    gap:14px;
+  }
+  .creator-tile{
+    background:var(--panel);
+    border:2px solid var(--border);
+    border-radius:18px;
+    padding:16px;
+    box-shadow:0 2px 10px rgba(129,52,175,0.05);
+    transition:transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  }
+  .creator-tile:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(221,42,123,0.15);
+    border-color:transparent;
+    background:
+      linear-gradient(var(--panel), var(--panel)) padding-box,
+      var(--grad) border-box;
+  }
+  .creator-tile .ct-name{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:1.02rem;
+    color:var(--text);
+    margin-bottom:2px;
+  }
+  .creator-tile .ct-cat{
+    font-size:0.74rem;
+    font-weight:700;
+    color:var(--purple);
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+    margin-bottom:10px;
+  }
+  .creator-tile .ct-reach{
+    font-size:0.82rem;
+    font-weight:700;
+    color:var(--good);
+    margin-bottom:8px;
+    line-height:1.4;
+  }
+  .creator-tile .ct-reach.no-data{
+    font-weight:500;
+    font-style:italic;
+    color:#b0a0b8;
+    font-size:0.78rem;
+  }
+  .creator-tile .ct-mgmt{
+    font-size:0.78rem;
+    color:var(--muted);
+    margin-bottom:12px;
+  }
+  .creator-tile .ct-badge{
+    display:inline-block;
+    padding:5px 12px;
+    border-radius:100px;
+    font-size:0.72rem;
+    font-weight:700;
+  }
+  .badge-green{background:var(--good-bg); color:var(--good);}
+  .badge-yellow{background:#FFF6DD; color:#a3781a;}
+  .badge-red{background:#FFE4E4; color:#c0392b;}
+  @media (max-width:480px){
+    .creator-grid{grid-template-columns:repeat(auto-fill, minmax(160px, 1fr));}
+  }
+</style></head>
+<body>
+<header>
+<h1>📋 Katalog agencji influencerskich i agencji gwiazd</h1>
+<p class="lead">Kliknij agencję, żeby rozwinąć szczegóły: kogo reprezentuje, jakie ma zasięgi, czy jest family friendly, kontakt oraz — jeśli podane publicznie — honorarium/prowizję.</p>
+<div class="badge-row">
+<span>🔎 Dane z otwartych źródeł (lipiec 2026)</span>
+<span>🚫 Brak zmyślonych danych</span>
+<span>🔗 Źródło przy każdym wpisie</span>
+</div>
+</header>
+<nav class="toc">
+<a href="#top50">🏆 Top 50 influencerów</a>
+<a href="#agencje-fullservice">Agencje influencer marketingu</a>
+<a href="#baza-tworcow">Baza twórców</a>
+<a href="#kolektywy">Kolektywy twórców</a>
+<a href="#platformy">Platformy / giełdy</a>
+<a href="#agencje-gwiazd">Agencje gwiazd</a>
+<a href="#modelki-hostessy">Modelki / hostessy</a>
+<a href="#jak-szukac">Inne sposoby</a>
+<a href="#stawki-budzet">Stawki i budżet</a>
+<a href="#brand-safety">Brand safety</a>
+<a href="#prawo">Prawo</a>
+</nav>
+<main>
+<div class="disclaimer">
+<strong>Ważne zastrzeżenie:</strong> Zasięgi, ceny, prowizje i nazwiska twórców pochodzą wyłącznie z publicznie dostępnych źródeł. Tam, gdzie agencja nie publikuje danej informacji, jest to oznaczone jako <span class="no-data">„brak publicznej informacji”</span> — nic nie zostało zmyślone.
+  </div>
+<!-- TOP 100 -->
+<section class="category" id="top50">
+<h2>🏆 Top rankingi polskich twórców wg zasięgów</h2>
+<p class="cat-desc">Trzy osobne rankingi — Instagram, TikTok i YouTube — bo to różne platformy z różnymi liderami. Przełącz się między nimi zakładkami poniżej.</p>
+<div class="rank-note">
+<strong>Metodologia i zastrzeżenia:</strong> Wszystkie trzy rankingi pochodzą z na bieżąco aktualizowanego serwisu <a href="https://ddob.com/ranking" style="color:var(--accent2)" target="_blank">DDOB.com — Ranking Influencerów</a> (agencja Daily Dose of Beauty), stan sprawdzony w lipcu 2026. To trzy <strong>osobne</strong> rankingi wg liczby obserwujących/subskrybentów na danej platformie — liczby się nie sumują, więc np. Friz czy Wersow mają wysokie miejsca zarówno na YouTube, jak i TikToku, ale to inne konta i inne liczby. Znajdziesz tu też sportowców i celebrytów (Lewandowski, Świątek, Szczęsny) obok twórców internetowych „z urodzenia”. Liczby zmieniają się codziennie i mogą się już różnić od podanych tu wartości. Kolumna „Zaangażowanie" to wskaźnik engagement rate podawany przez DDOB.
+    </div>
+<div class="item" id="rankAccordion">
+<div class="item-head" onclick="toggleRanking(this)">
+<div class="left">
+<h3>📊 Pokaż / ukryj pełne rankingi</h3>
+<div class="tag-row"><span class="tag">IG: 100 · TikTok: 50 · YouTube: 50</span><span class="tag">źródło: DDOB.com</span></div>
+</div>
+<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
+</div>
+<div class="item-body"><div class="item-body-inner">
+<div class="platform-tabs">
+<button class="platform-tab active" data-platform="ig" onclick="showPlatform('ig', this)">📷 Instagram</button>
+<button class="platform-tab" data-platform="tt" onclick="showPlatform('tt', this)">🎵 TikTok</button>
+<button class="platform-tab" data-platform="yt" onclick="showPlatform('yt', this)">▶️ YouTube</button>
+</div>
+<div class="platform-panel" id="panel-ig">
+<input class="rank-search" id="rankSearch" onkeyup="filterRanking()" placeholder="🔍 Szukaj po nazwisku lub nicku…" type="text"/>
+<div class="rank-table-wrap">
+<table class="rank-table" id="rankTable">
+<thead>
+<tr>
+<th>#</th>
+<th>Nazwisko / pseudonim</th>
+<th>Nick na Instagramie</th>
+<th>Obserwujący (IG)</th>
+<th>Zaangażowanie</th>
+</tr>
+</thead>
+<tbody>
+<tr><td class="rank-num" data-label="#">1</td><td data-label="Nazwisko / pseudonim">Robert Lewandowski</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/9516/_rl9" target="_blank">@_rl9</a></td><td class="rank-followers" data-label="Obserwujący (IG)">38 823 099</td><td class="rank-eng" data-label="Zaangażowanie">4,57</td></tr>
+<tr><td class="rank-num" data-label="#">2</td><td data-label="Nazwisko / pseudonim">Wojciech Szczęsny</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/5173/wojciechszczesny1" target="_blank">@wojciech.szczesny1</a></td><td class="rank-followers" data-label="Obserwujący (IG)">7 326 227</td><td class="rank-eng" data-label="Zaangażowanie">4,31</td></tr>
+<tr><td class="rank-num" data-label="#">3</td><td data-label="Nazwisko / pseudonim">Anna Lewandowska</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/5093/annalewandowska" target="_blank">@annalewandowska</a></td><td class="rank-followers" data-label="Obserwujący (IG)">5 724 505</td><td class="rank-eng" data-label="Zaangażowanie">4,12</td></tr>
+<tr><td class="rank-num" data-label="#">4</td><td data-label="Nazwisko / pseudonim">Karol Wiśniewski (Friz)</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/1431/frizoluszek" target="_blank">@frizoluszek</a></td><td class="rank-followers" data-label="Obserwujący (IG)">4 187 359</td><td class="rank-eng" data-label="Zaangażowanie">4,75</td></tr>
+<tr><td class="rank-num" data-label="#">5</td><td data-label="Nazwisko / pseudonim">Anna Maria Sieklucka</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/25765/anna_mariasieklucka" target="_blank">@anna_maria.sieklucka</a></td><td class="rank-followers" data-label="Obserwujący (IG)">3 848 616</td><td class="rank-eng" data-label="Zaangażowanie">4,05</td></tr>
+<tr><td class="rank-num" data-label="#">6</td><td data-label="Nazwisko / pseudonim">Weronika Sowa (Wersow)</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/13692/wersow" target="_blank">@wersow</a></td><td class="rank-followers" data-label="Obserwujący (IG)">3 749 883</td><td class="rank-eng" data-label="Zaangażowanie">4,25</td></tr>
+<tr><td class="rank-num" data-label="#">7</td><td data-label="Nazwisko / pseudonim">Zuzanna Smogulecka</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/25331/zusjeofficial" target="_blank">@zusjeofficial</a></td><td class="rank-followers" data-label="Obserwujący (IG)">3 363 680</td><td class="rank-eng" data-label="Zaangażowanie">4,42</td></tr>
+<tr><td class="rank-num" data-label="#">8</td><td data-label="Nazwisko / pseudonim">Veronica Bielik</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/6594/veronicabielik" target="_blank">@veronicabielik</a></td><td class="rank-followers" data-label="Obserwujący (IG)">3 312 975</td><td class="rank-eng" data-label="Zaangażowanie">3,27</td></tr>
+<tr><td class="rank-num" data-label="#">9</td><td data-label="Nazwisko / pseudonim">Heck (Mami Koyoko)</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/1495/mamikoyoko" target="_blank">@mamikoyoko</a></td><td class="rank-followers" data-label="Obserwujący (IG)">2 579 009</td><td class="rank-eng" data-label="Zaangażowanie">4,12</td></tr>
+<tr><td class="rank-num" data-label="#">10</td><td data-label="Nazwisko / pseudonim">Iga Świątek</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/25688/igaswiatek" target="_blank">@iga.swiatek</a></td><td class="rank-followers" data-label="Obserwujący (IG)">2 393 091</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">11</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/24922/lexychaplin" target="_blank">@lexychaplin</a></td><td class="rank-followers" data-label="Obserwujący (IG)">2 374 146</td><td class="rank-eng" data-label="Zaangażowanie">4,47</td></tr>
+<tr><td class="rank-num" data-label="#">12</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/25477/budda7" target="_blank">@budda.7</a></td><td class="rank-followers" data-label="Obserwujący (IG)">2 364 309</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">13</td><td data-label="Nazwisko / pseudonim">Trąbka (Tromba)</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/13101/trombabomba" target="_blank">@trombabomba</a></td><td class="rank-followers" data-label="Obserwujący (IG)">2 357 781</td><td class="rank-eng" data-label="Zaangażowanie">4,86</td></tr>
+<tr><td class="rank-num" data-label="#">14</td><td data-label="Nazwisko / pseudonim">Julia Wieniawa</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/10710/juliawieniawa" target="_blank">@juliawieniawa</a></td><td class="rank-followers" data-label="Obserwujący (IG)">2 337 543</td><td class="rank-eng" data-label="Zaangażowanie">4,56</td></tr>
+<tr><td class="rank-num" data-label="#">15</td><td data-label="Nazwisko / pseudonim">Rabczewska (Doda)</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/5675/dodaqueen" target="_blank">@dodaqueen</a></td><td class="rank-followers" data-label="Obserwujący (IG)">2 323 239</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">16</td><td data-label="Nazwisko / pseudonim">Natalia Janoszek</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/6381/nataliajanoszek" target="_blank">@nataliajanoszek</a></td><td class="rank-followers" data-label="Obserwujący (IG)">2 298 902</td><td class="rank-eng" data-label="Zaangażowanie">4,20</td></tr>
+<tr><td class="rank-num" data-label="#">17</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/1527/dharni" target="_blank">@dharni</a></td><td class="rank-followers" data-label="Obserwujący (IG)">2 265 994</td><td class="rank-eng" data-label="Zaangażowanie">3,06</td></tr>
+<tr><td class="rank-num" data-label="#">18</td><td data-label="Nazwisko / pseudonim">Martyna Wojciechowska</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/6372/martynaworld" target="_blank">@martyna.world</a></td><td class="rank-followers" data-label="Obserwujący (IG)">2 257 085</td><td class="rank-eng" data-label="Zaangażowanie">4,44</td></tr>
+<tr><td class="rank-num" data-label="#">19</td><td data-label="Nazwisko / pseudonim">Marcin Dubiel</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/840/marcindubiel" target="_blank">@marcindubiel</a></td><td class="rank-followers" data-label="Obserwujący (IG)">2 118 389</td><td class="rank-eng" data-label="Zaangażowanie">3,97</td></tr>
+<tr><td class="rank-num" data-label="#">20</td><td data-label="Nazwisko / pseudonim">Wierzgoń (Rezigiusz)</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/1427/rezigiusz" target="_blank">@rezigiusz</a></td><td class="rank-followers" data-label="Obserwujący (IG)">2 072 944</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">21</td><td data-label="Nazwisko / pseudonim">Natalia Karczmarczyk</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/14134/nataliakarczmarczyk" target="_blank">@natalia.karczmarczyk</a></td><td class="rank-followers" data-label="Obserwujący (IG)">2 065 117</td><td class="rank-eng" data-label="Zaangażowanie">4,16</td></tr>
+<tr><td class="rank-num" data-label="#">22</td><td data-label="Nazwisko / pseudonim">Dąbrowski</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/1440/jdabrowsky" target="_blank">@jdabrowsky</a></td><td class="rank-followers" data-label="Obserwujący (IG)">2 036 377</td><td class="rank-eng" data-label="Zaangażowanie">4,54</td></tr>
+<tr><td class="rank-num" data-label="#">23</td><td data-label="Nazwisko / pseudonim">Ewa Chodakowska</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/5131/chodakowskaewa" target="_blank">@chodakowskaewa</a></td><td class="rank-followers" data-label="Obserwujący (IG)">2 012 531</td><td class="rank-eng" data-label="Zaangażowanie">4,39</td></tr>
+<tr><td class="rank-num" data-label="#">24</td><td data-label="Nazwisko / pseudonim">Sylwia Przybysz</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/810/sylwiaprzybysz" target="_blank">@sylwiaprzybysz</a></td><td class="rank-followers" data-label="Obserwujący (IG)">2 000 416</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">25</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/5623/sucharcodzienny" target="_blank">@sucharcodzienny</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 937 665</td><td class="rank-eng" data-label="Zaangażowanie">4,27</td></tr>
+<tr><td class="rank-num" data-label="#">26</td><td data-label="Nazwisko / pseudonim">Joanna Jędrzejczyk</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/5145/joannajedrzejczyk" target="_blank">@joannajedrzejczyk</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 943 111</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">27</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/25415/fagataaa" target="_blank">@fagataaa</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 937 576</td><td class="rank-eng" data-label="Zaangażowanie">3,37</td></tr>
+<tr><td class="rank-num" data-label="#">28</td><td data-label="Nazwisko / pseudonim">Julia Kostera</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/1536/juliakostera" target="_blank">@juliakostera</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 928 866</td><td class="rank-eng" data-label="Zaangażowanie">4,61</td></tr>
+<tr><td class="rank-num" data-label="#">29</td><td data-label="Nazwisko / pseudonim">Agnieszka Grzelak</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/1451/agagrzelakk" target="_blank">@agagrzelakk</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 776 794</td><td class="rank-eng" data-label="Zaangażowanie">4,70</td></tr>
+<tr><td class="rank-num" data-label="#">30</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/13833/donmalikmontana" target="_blank">@donmalikmontana</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 769 301</td><td class="rank-eng" data-label="Zaangażowanie">4,00</td></tr>
+<tr><td class="rank-num" data-label="#">31</td><td data-label="Nazwisko / pseudonim">Mansztajn / Żabiński</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/6606/make_life_harder" target="_blank">@make_life_harder</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 746 230</td><td class="rank-eng" data-label="Zaangażowanie">3,57</td></tr>
+<tr><td class="rank-num" data-label="#">32</td><td data-label="Nazwisko / pseudonim">Joanna Krupa</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/5679/joannakrupa" target="_blank">@joannakrupa</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 735 598</td><td class="rank-eng" data-label="Zaangażowanie">4,70</td></tr>
+<tr><td class="rank-num" data-label="#">33</td><td data-label="Nazwisko / pseudonim">Majewska</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/1852/ari_maj" target="_blank">@ari_maj</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 714 034</td><td class="rank-eng" data-label="Zaangażowanie">4,33</td></tr>
+<tr><td class="rank-num" data-label="#">34</td><td data-label="Nazwisko / pseudonim">Sürma Majewska (Deynn)</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/6387/deynn" target="_blank">@deynn</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 708 614</td><td class="rank-eng" data-label="Zaangażowanie">4,21</td></tr>
+<tr><td class="rank-num" data-label="#">35</td><td data-label="Nazwisko / pseudonim">Mateusz Janusz</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/795/fitlovers" target="_blank">@fit.lovers</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 702 113</td><td class="rank-eng" data-label="Zaangażowanie">3,51</td></tr>
+<tr><td class="rank-num" data-label="#">36</td><td data-label="Nazwisko / pseudonim">Krzyżanowski (Mini Majk)</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/21964/_minimajk" target="_blank">@_minimajk</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 682 973</td><td class="rank-eng" data-label="Zaangażowanie">3,86</td></tr>
+<tr><td class="rank-num" data-label="#">37</td><td data-label="Nazwisko / pseudonim">Bracia Neffati</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/4349/neffatibrothers" target="_blank">@neffatibrothers</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 627 645</td><td class="rank-eng" data-label="Zaangażowanie">3,67</td></tr>
+<tr><td class="rank-num" data-label="#">38</td><td data-label="Nazwisko / pseudonim">Kuba Wojewódzki</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/4889/kuba_wojewodzki_official" target="_blank">@kuba_wojewodzki_official</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 613 970</td><td class="rank-eng" data-label="Zaangażowanie">4,00</td></tr>
+<tr><td class="rank-num" data-label="#">39</td><td data-label="Nazwisko / pseudonim">Baron (Boxdel)</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/5126/boxdel" target="_blank">@boxdel</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 607 006</td><td class="rank-eng" data-label="Zaangażowanie">4,08</td></tr>
+<tr><td class="rank-num" data-label="#">40</td><td data-label="Nazwisko / pseudonim">Rozenek-Majdan</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/12690/m_rozenek" target="_blank">@m_rozenek</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 601 762</td><td class="rank-eng" data-label="Zaangażowanie">4,00</td></tr>
+<tr><td class="rank-num" data-label="#">41</td><td data-label="Nazwisko / pseudonim">Zając</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/1509/andziaks" target="_blank">@andziaks</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 595 650</td><td class="rank-eng" data-label="Zaangażowanie">4,14</td></tr>
+<tr><td class="rank-num" data-label="#">42</td><td data-label="Nazwisko / pseudonim">Roksana Węgiel</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/860/roxie_wegiel" target="_blank">@roxie_wegiel</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 594 610</td><td class="rank-eng" data-label="Zaangażowanie">3,96</td></tr>
+<tr><td class="rank-num" data-label="#">43</td><td data-label="Nazwisko / pseudonim">Nowak</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/797/ola_nowak" target="_blank">@ola_nowak</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 559 937</td><td class="rank-eng" data-label="Zaangażowanie">3,71</td></tr>
+<tr><td class="rank-num" data-label="#">44</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/13592/bedoes2115" target="_blank">@bedoes2115</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 537 628</td><td class="rank-eng" data-label="Zaangażowanie">4,14</td></tr>
+<tr><td class="rank-num" data-label="#">45</td><td data-label="Nazwisko / pseudonim">Zimmerman (Naruciak)</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/1429/naruciak" target="_blank">@naruciak</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 530 164</td><td class="rank-eng" data-label="Zaangażowanie">4,73</td></tr>
+<tr><td class="rank-num" data-label="#">46</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/12885/lilmasti" target="_blank">@lilmasti</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 504 191</td><td class="rank-eng" data-label="Zaangażowanie">3,76</td></tr>
+<tr><td class="rank-num" data-label="#">47</td><td data-label="Nazwisko / pseudonim">Mucha</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/1464/littlemooonster96" target="_blank">@littlemooonster96</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 462 333</td><td class="rank-eng" data-label="Zaangażowanie">3,52</td></tr>
+<tr><td class="rank-num" data-label="#">48</td><td data-label="Nazwisko / pseudonim">Stopczyńska</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/22634/https" target="_blank">(profil DDOB #22634)</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 454 071</td><td class="rank-eng" data-label="Zaangażowanie">4,33</td></tr>
+<tr><td class="rank-num" data-label="#">49</td><td data-label="Nazwisko / pseudonim">Kuczyńska (Maffashion)</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/1608/maffashion_official" target="_blank">@maffashion_official</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 434 875</td><td class="rank-eng" data-label="Zaangażowanie">3,83</td></tr>
+<tr><td class="rank-num" data-label="#">50</td><td data-label="Nazwisko / pseudonim">Grzelakowska-Kostoglu</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/1444/redlipstickmonster" target="_blank">@redlipstickmonster</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 409 636</td><td class="rank-eng" data-label="Zaangażowanie">3,90</td></tr>
+<tr><td class="rank-num" data-label="#">51</td><td data-label="Nazwisko / pseudonim">Monika Kociołek</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/781/monikakociolek" target="_blank">@monika.kociolek</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 399 511</td><td class="rank-eng" data-label="Zaangażowanie">3,76</td></tr>
+<tr><td class="rank-num" data-label="#">52</td><td data-label="Nazwisko / pseudonim">Julia Żugaj</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/780/juliazugaj" target="_blank">@juliazugaj</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 382 970</td><td class="rank-eng" data-label="Zaangażowanie">4,44</td></tr>
+<tr><td class="rank-num" data-label="#">53</td><td data-label="Nazwisko / pseudonim">Kwiatkowski</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/1533/kwiatkowsky" target="_blank">@kwiatkowsky</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 367 796</td><td class="rank-eng" data-label="Zaangażowanie">4,13</td></tr>
+<tr><td class="rank-num" data-label="#">54</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/4757/kacperblonsky" target="_blank">@kacperblonsky</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 355 012</td><td class="rank-eng" data-label="Zaangażowanie">3,92</td></tr>
+<tr><td class="rank-num" data-label="#">55</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/25724/hi_hania" target="_blank">@hi_hania</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 351 100</td><td class="rank-eng" data-label="Zaangażowanie">4,67</td></tr>
+<tr><td class="rank-num" data-label="#">56</td><td data-label="Nazwisko / pseudonim">Kuc</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/1258/twinsstyle1" target="_blank">@twinsstyle1</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 327 907</td><td class="rank-eng" data-label="Zaangażowanie">3,45</td></tr>
+<tr><td class="rank-num" data-label="#">57</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/18875/kartonii" target="_blank">@kartonii</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 318 391</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">58</td><td data-label="Nazwisko / pseudonim">Arkadiusz Milik</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/5129/arekmilik" target="_blank">@arekmilik</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 315 388</td><td class="rank-eng" data-label="Zaangażowanie">4,00</td></tr>
+<tr><td class="rank-num" data-label="#">59</td><td data-label="Nazwisko / pseudonim">Tomasz Oświeciński</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/24365/tomasz_oswiecinski_official" target="_blank">@tomasz_oswiecinski_official</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 315 190</td><td class="rank-eng" data-label="Zaangażowanie">4,67</td></tr>
+<tr><td class="rank-num" data-label="#">60</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/24810/aggie" target="_blank">@aggie</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 281 521</td><td class="rank-eng" data-label="Zaangażowanie">4,40</td></tr>
+<tr><td class="rank-num" data-label="#">61</td><td data-label="Nazwisko / pseudonim">Wojtek Gola</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/8653/wojtekgola" target="_blank">@wojtekgola</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 281 134</td><td class="rank-eng" data-label="Zaangażowanie">4,25</td></tr>
+<tr><td class="rank-num" data-label="#">62</td><td data-label="Nazwisko / pseudonim">Barbara Kurdej-Szatan</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/10503/kurdejszatan" target="_blank">@kurdejszatan</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 276 657</td><td class="rank-eng" data-label="Zaangażowanie">3,70</td></tr>
+<tr><td class="rank-num" data-label="#">63</td><td data-label="Nazwisko / pseudonim">Linkiewicz</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/4869/linkimaster" target="_blank">@linkimaster</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 272 942</td><td class="rank-eng" data-label="Zaangażowanie">3,88</td></tr>
+<tr><td class="rank-num" data-label="#">64</td><td data-label="Nazwisko / pseudonim">Maria Jeleniewska</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/750/jeleniewska" target="_blank">@jeleniewska</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 271 959</td><td class="rank-eng" data-label="Zaangażowanie">4,50</td></tr>
+<tr><td class="rank-num" data-label="#">65</td><td data-label="Nazwisko / pseudonim">Natalia Siwiec</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/5593/nataliasiwiecofficial" target="_blank">@nataliasiwiec.official</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 255 200</td><td class="rank-eng" data-label="Zaangażowanie">4,55</td></tr>
+<tr><td class="rank-num" data-label="#">66</td><td data-label="Nazwisko / pseudonim">Dominik Rupiński</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/83/dominikrupinski" target="_blank">@dominikrupinski</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 254 890</td><td class="rank-eng" data-label="Zaangażowanie">4,11</td></tr>
+<tr><td class="rank-num" data-label="#">67</td><td data-label="Nazwisko / pseudonim">Dominik Rupiński (2. profil w źródle)</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/1423/dominikrupinski" target="_blank">@dominikrupinski</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 254 852</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">68</td><td data-label="Nazwisko / pseudonim">Faustyna Nowak</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/638/faustynaf" target="_blank">@faustynaf</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 211 375</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">69</td><td data-label="Nazwisko / pseudonim">Kasprzyk</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/5113/isamupt" target="_blank">@isamupt</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 211 289</td><td class="rank-eng" data-label="Zaangażowanie">4,85</td></tr>
+<tr><td class="rank-num" data-label="#">70</td><td data-label="Nazwisko / pseudonim">Górski</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/5617/thenitrozyniak" target="_blank">@thenitrozyniak</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 208 888</td><td class="rank-eng" data-label="Zaangażowanie">4,89</td></tr>
+<tr><td class="rank-num" data-label="#">71</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/4884/domsli22" target="_blank">@domsli22</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 180 310</td><td class="rank-eng" data-label="Zaangażowanie">4,75</td></tr>
+<tr><td class="rank-num" data-label="#">72</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/5653/marina_official" target="_blank">@marina_official</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 170 996</td><td class="rank-eng" data-label="Zaangażowanie">4,50</td></tr>
+<tr><td class="rank-num" data-label="#">73</td><td data-label="Nazwisko / pseudonim">Klaudia Halejcio</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/6363/klaudiahalejcio" target="_blank">@klaudiahalejcio</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 166 700</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">74</td><td data-label="Nazwisko / pseudonim">Małgorzata Kożuchowska</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/22042/malgorzatakozuchowska_" target="_blank">@malgorzatakozuchowska_</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 145 846</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">75</td><td data-label="Nazwisko / pseudonim">Nyczke (Książulo)</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/5619/ksiazulo" target="_blank">@ksiazulo</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 145 263</td><td class="rank-eng" data-label="Zaangażowanie">4,40</td></tr>
+<tr><td class="rank-num" data-label="#">76</td><td data-label="Nazwisko / pseudonim">Adam Zdrójkowski</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/10453/adam_zdrojkowski" target="_blank">@adam_zdrojkowski</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 097 693</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">77</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/11512/gradek_justyna" target="_blank">@gradek_justyna</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 093 461</td><td class="rank-eng" data-label="Zaangażowanie">4,00</td></tr>
+<tr><td class="rank-num" data-label="#">78</td><td data-label="Nazwisko / pseudonim">Grabowski</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/10538/quebahombre" target="_blank">@quebahombre</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 089 109</td><td class="rank-eng" data-label="Zaangażowanie">4,00</td></tr>
+<tr><td class="rank-num" data-label="#">79</td><td data-label="Nazwisko / pseudonim">Maciej Musiał</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/25016/maciejmusial_official" target="_blank">@maciejmusial_official</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 078 960</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">80</td><td data-label="Nazwisko / pseudonim">Małgorzata Socha</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/4782/malgosia_socha" target="_blank">@malgosia_socha</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 077 243</td><td class="rank-eng" data-label="Zaangażowanie">4,33</td></tr>
+<tr><td class="rank-num" data-label="#">81</td><td data-label="Nazwisko / pseudonim">Trochonowicz</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/561/lucky_luka_official" target="_blank">@lucky_luka_official</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 074 478</td><td class="rank-eng" data-label="Zaangażowanie">4,50</td></tr>
+<tr><td class="rank-num" data-label="#">82</td><td data-label="Nazwisko / pseudonim">Wawrzyniak</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/12946/kamerzysta69" target="_blank">@kamerzysta69</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 069 175</td><td class="rank-eng" data-label="Zaangażowanie">3,19</td></tr>
+<tr><td class="rank-num" data-label="#">83</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/11081/dotindotin" target="_blank">@dotindotin</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 057 496</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">84</td><td data-label="Nazwisko / pseudonim">Sylwia Lipka</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/753/sylwialipka_music" target="_blank">@sylwialipka_music</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 056 548</td><td class="rank-eng" data-label="Zaangażowanie">4,25</td></tr>
+<tr><td class="rank-num" data-label="#">85</td><td data-label="Nazwisko / pseudonim">Mucha (Tanna)</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/11490/taannamucha" target="_blank">@taannamucha</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 036 377</td><td class="rank-eng" data-label="Zaangażowanie">4,20</td></tr>
+<tr><td class="rank-num" data-label="#">86</td><td data-label="Nazwisko / pseudonim">Szpejenkowski</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/26101/dance_sfinks_official" target="_blank">@dance_sfinks_official</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 018 084</td><td class="rank-eng" data-label="Zaangażowanie">4,33</td></tr>
+<tr><td class="rank-num" data-label="#">87</td><td data-label="Nazwisko / pseudonim">Klepko (Cleo)</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/826/cleo_don" target="_blank">@cleo_don</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 014 193</td><td class="rank-eng" data-label="Zaangażowanie">4,36</td></tr>
+<tr><td class="rank-num" data-label="#">88</td><td data-label="Nazwisko / pseudonim">Martyna Zbirańska</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/787/martynapysia" target="_blank">@martyna.pysia</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 007 266</td><td class="rank-eng" data-label="Zaangażowanie">3,78</td></tr>
+<tr><td class="rank-num" data-label="#">89</td><td data-label="Nazwisko / pseudonim">Rentel</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/834/martirenti" target="_blank">@martirenti</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 003 808</td><td class="rank-eng" data-label="Zaangażowanie">3,36</td></tr>
+<tr><td class="rank-num" data-label="#">90</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/4640/kodzayeva" target="_blank">@kodzayeva</a></td><td class="rank-followers" data-label="Obserwujący (IG)">1 000 954</td><td class="rank-eng" data-label="Zaangażowanie">4,25</td></tr>
+<tr><td class="rank-num" data-label="#">91</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/13846/sylwiabomba" target="_blank">@sylwiabomba</a></td><td class="rank-followers" data-label="Obserwujący (IG)">991 917</td><td class="rank-eng" data-label="Zaangażowanie">4,40</td></tr>
+<tr><td class="rank-num" data-label="#">92</td><td data-label="Nazwisko / pseudonim">Lila Janowska</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/4/lilajanowska" target="_blank">@lilajanowska</a></td><td class="rank-followers" data-label="Obserwujący (IG)">988 057</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">93</td><td data-label="Nazwisko / pseudonim">Jarząbkowski (Pasha Biceps)</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/5152/pashabiceps" target="_blank">@pashabiceps</a></td><td class="rank-followers" data-label="Obserwujący (IG)">983 148</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">94</td><td data-label="Nazwisko / pseudonim">Zawistowski (Zabson)</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/11110/zabsonziomal" target="_blank">@zabsonziomal</a></td><td class="rank-followers" data-label="Obserwujący (IG)">970 828</td><td class="rank-eng" data-label="Zaangażowanie">3,44</td></tr>
+<tr><td class="rank-num" data-label="#">95</td><td data-label="Nazwisko / pseudonim">Kinga Sawczuk</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/749/kingasawczuk" target="_blank">@kingasawczuk</a></td><td class="rank-followers" data-label="Obserwujący (IG)">970 443</td><td class="rank-eng" data-label="Zaangażowanie">4,27</td></tr>
+<tr><td class="rank-num" data-label="#">96</td><td data-label="Nazwisko / pseudonim">Joanna Kuchta</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/10113/joannakuchta" target="_blank">@joannakuchta</a></td><td class="rank-followers" data-label="Obserwujący (IG)">962 793</td><td class="rank-eng" data-label="Zaangażowanie">4,75</td></tr>
+<tr><td class="rank-num" data-label="#">97</td><td data-label="Nazwisko / pseudonim">Majewski</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/1717/iammajewski" target="_blank">@iammajewski</a></td><td class="rank-followers" data-label="Obserwujący (IG)">960 654</td><td class="rank-eng" data-label="Zaangażowanie">4,00</td></tr>
+<tr><td class="rank-num" data-label="#">98</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/25672/zurnalistapl" target="_blank">@zurnalistapl</a></td><td class="rank-followers" data-label="Obserwujący (IG)">959 973</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">99</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/11250/owcawk" target="_blank">@owcawk</a></td><td class="rank-followers" data-label="Obserwujący (IG)">937 662</td><td class="rank-eng" data-label="Zaangażowanie">4,33</td></tr>
+<tr><td class="rank-num" data-label="#">100</td><td data-label="Nazwisko / pseudonim">Kruszel</td><td class="rank-handle" data-label="Nick na Instagramie"><a href="https://ddob.com/ranking/instagram/12626/kruszwil" target="_blank">@kruszwil</a></td><td class="rank-followers" data-label="Obserwujący (IG)">936 796</td><td class="rank-eng" data-label="Zaangażowanie">3,70</td></tr>
+</tbody>
+</table>
+</div>
+<p class="src" style="margin-top:12px;">Źródło: <a href="https://ddob.com/ranking/instagram" target="_blank">ddob.com/ranking/instagram</a> (strony 1–4, stan lipiec 2026). Pomocniczo: <a href="https://coconutagency.pl/najpopularniejsi-influencerzy-w-polsce-na-2026-rok-ranking-najpopularniejszych-influencerow-na-instagramie/" target="_blank">Coconut Agency (2026)</a>, <a href="https://evolve-poznan.pl/ranking-top-10-najwiekszych-influencerow-w-polsce/" target="_blank">Evolve Poznań — Top 10</a>.</p>
+</div>
+
+<div class="platform-panel" id="panel-tt" style="display:none;">
+<input class="rank-search" id="rankSearchTT" onkeyup="filterTable('rankSearchTT','rankTableTT')" placeholder="🔍 Szukaj po nazwisku lub nicku…" type="text"/>
+<div class="rank-table-wrap">
+<table class="rank-table" id="rankTableTT">
+<thead><tr><th>#</th><th>Nazwisko / pseudonim</th><th>Nick na TikToku</th><th>Obserwujący (TikTok)</th><th>Zaangażowanie</th></tr></thead>
+<tbody>
+<tr><td class="rank-num" data-label="#">1</td><td data-label="Nazwisko / pseudonim">Kuc (Twins Style)</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/1258/twins-style" target="_blank">@twinsstyle</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">21 840 521</td><td class="rank-eng" data-label="Zaangażowanie">3,41</td></tr>
+<tr><td class="rank-num" data-label="#">2</td><td data-label="Nazwisko / pseudonim">Neffati</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/4349/neffatibrothers" target="_blank">@neffatibrothers</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">18 811 381</td><td class="rank-eng" data-label="Zaangażowanie">3,67</td></tr>
+<tr><td class="rank-num" data-label="#">3</td><td data-label="Nazwisko / pseudonim">Jeleniewska</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/750/ig-jeleniewska" target="_blank">@jeleniewska</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">13 526 829</td><td class="rank-eng" data-label="Zaangażowanie">4,50</td></tr>
+<tr><td class="rank-num" data-label="#">4</td><td data-label="Nazwisko / pseudonim">Robert Lewandowski</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/9516/robert-lewandowski" target="_blank">@robertlewandowski</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">12 304 321</td><td class="rank-eng" data-label="Zaangażowanie">4,57</td></tr>
+<tr><td class="rank-num" data-label="#">5</td><td data-label="Nazwisko / pseudonim">Sojka (Marley)</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/788/marley" target="_blank">@marley</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">9 599 996</td><td class="rank-eng" data-label="Zaangażowanie">4,34</td></tr>
+<tr><td class="rank-num" data-label="#">6</td><td data-label="Nazwisko / pseudonim">Smogulecka (Zusje)</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/25331/zusje" target="_blank">@zusje</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">9 388 575</td><td class="rank-eng" data-label="Zaangażowanie">4,42</td></tr>
+<tr><td class="rank-num" data-label="#">7</td><td data-label="Nazwisko / pseudonim">Pawlik (Sabinitta)</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/803/sabinitta" target="_blank">@sabinitta</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">6 260 672</td><td class="rank-eng" data-label="Zaangażowanie">3,55</td></tr>
+<tr><td class="rank-num" data-label="#">8</td><td data-label="Nazwisko / pseudonim">Szpejenkowski (Sfinks)</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/26101/sfinks" target="_blank">@sfinks</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">6 015 815</td><td class="rank-eng" data-label="Zaangażowanie">4,33</td></tr>
+<tr><td class="rank-num" data-label="#">9</td><td data-label="Nazwisko / pseudonim">Kuba Norek</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/844/kuba-norek" target="_blank">@norekkuba</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">5 999 435</td><td class="rank-eng" data-label="Zaangażowanie">4,82</td></tr>
+<tr><td class="rank-num" data-label="#">10</td><td data-label="Nazwisko / pseudonim">Zawada</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/820/ewa-zawada" target="_blank">@ewazawada</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">5 668 843</td><td class="rank-eng" data-label="Zaangażowanie">4,43</td></tr>
+<tr><td class="rank-num" data-label="#">11</td><td data-label="Nazwisko / pseudonim">Ziętkowski</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/1232/krystian-zietkowski" target="_blank">@krystianzietkowski</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">5 097 680</td><td class="rank-eng" data-label="Zaangażowanie">3,95</td></tr>
+<tr><td class="rank-num" data-label="#">12</td><td data-label="Nazwisko / pseudonim">Sawczuk</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/749/kinga-sawczuk" target="_blank">@kingasawczuk</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">5 054 075</td><td class="rank-eng" data-label="Zaangażowanie">4,27</td></tr>
+<tr><td class="rank-num" data-label="#">13</td><td data-label="Nazwisko / pseudonim">Klimczyk</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/26090/mama_na_obrotach" target="_blank">@mama_na_obrotach</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">4 653 979</td><td class="rank-eng" data-label="Zaangażowanie">4,86</td></tr>
+<tr><td class="rank-num" data-label="#">14</td><td data-label="Nazwisko / pseudonim">Zabielski</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/752/filip-zabielski" target="_blank">@filipzabielski</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">4 424 248</td><td class="rank-eng" data-label="Zaangażowanie">2,71</td></tr>
+<tr><td class="rank-num" data-label="#">15</td><td data-label="Nazwisko / pseudonim">Rupiński</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/83/dominik-rupinski" target="_blank">@dominikrupinski</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">4 214 698</td><td class="rank-eng" data-label="Zaangażowanie">4,11</td></tr>
+<tr><td class="rank-num" data-label="#">16</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/23276/vanessa-ig-havaniaaa" target="_blank">@havaniaaa</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">4 042 009</td><td class="rank-eng" data-label="Zaangażowanie">3,63</td></tr>
+<tr><td class="rank-num" data-label="#">17</td><td data-label="Nazwisko / pseudonim">Anzorge</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/899/couplepower" target="_blank">@couplepower</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">4 038 222</td><td class="rank-eng" data-label="Zaangażowanie">3,88</td></tr>
+<tr><td class="rank-num" data-label="#">18</td><td data-label="Nazwisko / pseudonim">Żugaj</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/780/julia-zugaj" target="_blank">@juliazugaj</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">4 011 846</td><td class="rank-eng" data-label="Zaangażowanie">4,44</td></tr>
+<tr><td class="rank-num" data-label="#">19</td><td data-label="Nazwisko / pseudonim">Kowalczyk</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/765/sebastiankowalczykkk" target="_blank">@sebastiankowalczykkk</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">3 992 572</td><td class="rank-eng" data-label="Zaangażowanie">4,17</td></tr>
+<tr><td class="rank-num" data-label="#">20</td><td data-label="Nazwisko / pseudonim">Kociołek</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/781/mona" target="_blank">@mona</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">3 909 654</td><td class="rank-eng" data-label="Zaangażowanie">3,76</td></tr>
+<tr><td class="rank-num" data-label="#">21</td><td data-label="Nazwisko / pseudonim">Stojanowska</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/222/lillyy" target="_blank">@lillyy</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">3 720 154</td><td class="rank-eng" data-label="Zaangażowanie">3,68</td></tr>
+<tr><td class="rank-num" data-label="#">22</td><td data-label="Nazwisko / pseudonim">Pawlik (Patik)</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/4447/patik" target="_blank">@patik</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">3 692 325</td><td class="rank-eng" data-label="Zaangażowanie">3,89</td></tr>
+<tr><td class="rank-num" data-label="#">23</td><td data-label="Nazwisko / pseudonim">Daniel Xantos</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/22031/daniel-xantos" target="_blank">@danielxantos</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">3 531 248</td><td class="rank-eng" data-label="Zaangażowanie">3,44</td></tr>
+<tr><td class="rank-num" data-label="#">24</td><td data-label="Nazwisko / pseudonim">Jakub Zuzak</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/24661/jakub-zuzak" target="_blank">@jakubzuzak</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">3 517 863</td><td class="rank-eng" data-label="Zaangażowanie">4,64</td></tr>
+<tr><td class="rank-num" data-label="#">25</td><td data-label="Nazwisko / pseudonim">Vechess</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/1656/mans" target="_blank">@mans</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">3 429 379</td><td class="rank-eng" data-label="Zaangażowanie">4,38</td></tr>
+<tr><td class="rank-num" data-label="#">26</td><td data-label="Nazwisko / pseudonim">Sisik</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/828/natalia-sisik" target="_blank">@nataliasisik</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">3 255 628</td><td class="rank-eng" data-label="Zaangażowanie">4,08</td></tr>
+<tr><td class="rank-num" data-label="#">27</td><td data-label="Nazwisko / pseudonim">Heck</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/1495/mamiko" target="_blank">@mamiko</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">3 104 227</td><td class="rank-eng" data-label="Zaangażowanie">4,12</td></tr>
+<tr><td class="rank-num" data-label="#">28</td><td data-label="Nazwisko / pseudonim">Karczmarczyk</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/14134/natsu" target="_blank">@natsu</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">3 092 645</td><td class="rank-eng" data-label="Zaangażowanie">4,16</td></tr>
+<tr><td class="rank-num" data-label="#">29</td><td data-label="Nazwisko / pseudonim">Jabłońska</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/755/kamelemona" target="_blank">@kamelemona</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">3 008 412</td><td class="rank-eng" data-label="Zaangażowanie">4,35</td></tr>
+<tr><td class="rank-num" data-label="#">30</td><td data-label="Nazwisko / pseudonim">Kociszewska</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/751/lena-moonlight" target="_blank">@lenamoonlight</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">2 944 035</td><td class="rank-eng" data-label="Zaangażowanie">3,60</td></tr>
+<tr><td class="rank-num" data-label="#">31</td><td data-label="Nazwisko / pseudonim">Klaudia Bieszcz</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/25437/klaudia-bieszcz" target="_blank">@klaudiabieszcz</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">2 935 447</td><td class="rank-eng" data-label="Zaangażowanie">3,50</td></tr>
+<tr><td class="rank-num" data-label="#">32</td><td data-label="Nazwisko / pseudonim">Szymczak</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/26102/kamil-szymczak" target="_blank">@kamilszymczak</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">2 933 612</td><td class="rank-eng" data-label="Zaangażowanie">4,67</td></tr>
+<tr><td class="rank-num" data-label="#">33</td><td data-label="Nazwisko / pseudonim">Ula Kornelia Woźniak</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/22111/ula-kornelia-wozniak" target="_blank">@ulakorneliawozniak</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">2 889 133</td><td class="rank-eng" data-label="Zaangażowanie">4,53</td></tr>
+<tr><td class="rank-num" data-label="#">34</td><td data-label="Nazwisko / pseudonim">Kacper (Jasper) Porębski</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/22106/kacper-jasper-porebski" target="_blank">@jasper</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">2 838 854</td><td class="rank-eng" data-label="Zaangażowanie">3,69</td></tr>
+<tr><td class="rank-num" data-label="#">35</td><td data-label="Nazwisko / pseudonim">Kostera</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/1536/julia-kostera" target="_blank">@juliakostera</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">2 742 959</td><td class="rank-eng" data-label="Zaangażowanie">4,61</td></tr>
+<tr><td class="rank-num" data-label="#">36</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/23254/pasiekofficial" target="_blank">@pasiekofficial</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">2 704 079</td><td class="rank-eng" data-label="Zaangażowanie">4,00</td></tr>
+<tr><td class="rank-num" data-label="#">37</td><td data-label="Nazwisko / pseudonim">Pieszko</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/760/pieszko" target="_blank">@pieszko</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">2 584 764</td><td class="rank-eng" data-label="Zaangażowanie">4,27</td></tr>
+<tr><td class="rank-num" data-label="#">38</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/22083/dejwid" target="_blank">@dejwid</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">2 572 801</td><td class="rank-eng" data-label="Zaangażowanie">3,15</td></tr>
+<tr><td class="rank-num" data-label="#">39</td><td data-label="Nazwisko / pseudonim">Gołaszewska</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/25655/" target="_blank">profil #25655</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">2 467 242</td><td class="rank-eng" data-label="Zaangażowanie">4,18</td></tr>
+<tr><td class="rank-num" data-label="#">40</td><td data-label="Nazwisko / pseudonim">Szwed (Pavlloo)</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/800/pawel-pavlloo-szwed" target="_blank">@pavlloo</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">2 438 418</td><td class="rank-eng" data-label="Zaangażowanie">4,00</td></tr>
+<tr><td class="rank-num" data-label="#">41</td><td data-label="Nazwisko / pseudonim">Czaro</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/23651/czaro-igczaronykiel" target="_blank">@czaronykiel</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">2 408 780</td><td class="rank-eng" data-label="Zaangażowanie">4,42</td></tr>
+<tr><td class="rank-num" data-label="#">42</td><td data-label="Nazwisko / pseudonim">Bylina</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/26088/edzio-wez-cos-nawin" target="_blank">@edziowezcosnawin</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">2 403 522</td><td class="rank-eng" data-label="Zaangażowanie">4,00</td></tr>
+<tr><td class="rank-num" data-label="#">43</td><td data-label="Nazwisko / pseudonim">Natalia Skroczek</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/23677/natalia-skroczek" target="_blank">@nataliaskroczek</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">2 317 887</td><td class="rank-eng" data-label="Zaangażowanie">4,38</td></tr>
+<tr><td class="rank-num" data-label="#">44</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/22159/alxyni" target="_blank">@alxyni</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">2 291 734</td><td class="rank-eng" data-label="Zaangażowanie">4,71</td></tr>
+<tr><td class="rank-num" data-label="#">45</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/23333/charazinsky" target="_blank">@charazinsky</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">2 221 605</td><td class="rank-eng" data-label="Zaangażowanie">4,65</td></tr>
+<tr><td class="rank-num" data-label="#">46</td><td data-label="Nazwisko / pseudonim">Roxana Orłowska</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/22227/roxana-orlowska" target="_blank">@roxanaorlowska</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">2 168 782</td><td class="rank-eng" data-label="Zaangażowanie">3,63</td></tr>
+<tr><td class="rank-num" data-label="#">47</td><td data-label="Nazwisko / pseudonim">Zbirańska</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/787/pysia" target="_blank">@pysia</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">2 153 627</td><td class="rank-eng" data-label="Zaangażowanie">3,78</td></tr>
+<tr><td class="rank-num" data-label="#">48</td><td data-label="Nazwisko / pseudonim">Mateusz Janusz</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/795/fitlovers" target="_blank">@fitlovers</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">2 143 467</td><td class="rank-eng" data-label="Zaangażowanie">3,51</td></tr>
+<tr><td class="rank-num" data-label="#">49</td><td data-label="Nazwisko / pseudonim">Kamil Kossakowski</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/18134/kamil-kossakowski" target="_blank">@kamilkossakowski</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">2 105 422</td><td class="rank-eng" data-label="Zaangażowanie">3,93</td></tr>
+<tr><td class="rank-num" data-label="#">50</td><td data-label="Nazwisko / pseudonim">Zabielska</td><td class="rank-handle" data-label="Nick na TikToku"><a href="https://ddob.com/ranking/tik_tok/794/zabielska" target="_blank">@zabielska</a></td><td class="rank-followers" data-label="Obserwujący (TikTok)">2 103 997</td><td class="rank-eng" data-label="Zaangażowanie">4,17</td></tr>
+</tbody>
+</table>
+</div>
+<p class="src" style="margin-top:12px;">Źródło: <a href="https://ddob.com/ranking/tik_tok" target="_blank">ddob.com/ranking/tik_tok</a> (strony 1–2, stan lipiec 2026). Top 50 (z pełnych 100 dostępnych w źródle).</p>
+</div>
+
+<div class="platform-panel" id="panel-yt" style="display:none;">
+<input class="rank-search" id="rankSearchYT" onkeyup="filterTable('rankSearchYT','rankTableYT')" placeholder="🔍 Szukaj po nazwisku lub nicku…" type="text"/>
+<div class="rank-table-wrap">
+<table class="rank-table" id="rankTableYT">
+<thead><tr><th>#</th><th>Nazwisko / pseudonim</th><th>Kanał YouTube</th><th>Subskrybenci</th><th>Zaangażowanie</th></tr></thead>
+<tbody>
+<tr><td class="rank-num" data-label="#">1</td><td data-label="Nazwisko / pseudonim">Kuc (Twins Style)</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/1258/twins-style" target="_blank">Twins Style</a></td><td class="rank-followers" data-label="Subskrybenci">9 690 000</td><td class="rank-eng" data-label="Zaangażowanie">3,41</td></tr>
+<tr><td class="rank-num" data-label="#">2</td><td data-label="Nazwisko / pseudonim">Heck</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/1495/mamiko" target="_blank">Mamiko</a></td><td class="rank-followers" data-label="Subskrybenci">9 620 000</td><td class="rank-eng" data-label="Zaangażowanie">4,12</td></tr>
+<tr><td class="rank-num" data-label="#">3</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/1527/dharni" target="_blank">Dharni</a></td><td class="rank-followers" data-label="Subskrybenci">9 390 000</td><td class="rank-eng" data-label="Zaangażowanie">3,06</td></tr>
+<tr><td class="rank-num" data-label="#">4</td><td data-label="Nazwisko / pseudonim">Wierzgoń</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/1427/rezigiusz" target="_blank">reZigiusz</a></td><td class="rank-followers" data-label="Subskrybenci">5 460 000</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">5</td><td data-label="Nazwisko / pseudonim">Gązwa</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/829/blowek" target="_blank">Blowek</a></td><td class="rank-followers" data-label="Subskrybenci">5 430 000</td><td class="rank-eng" data-label="Zaangażowanie">4,70</td></tr>
+<tr><td class="rank-num" data-label="#">6</td><td data-label="Nazwisko / pseudonim">Karol Wiśniewski (Friz)</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/1431/karol-friz-wisniewski" target="_blank">Friz</a></td><td class="rank-followers" data-label="Subskrybenci">5 390 000</td><td class="rank-eng" data-label="Zaangażowanie">4,75</td></tr>
+<tr><td class="rank-num" data-label="#">7</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/12848/step-records" target="_blank">Step Records</a></td><td class="rank-followers" data-label="Subskrybenci">4 050 000</td><td class="rank-eng" data-label="Zaangażowanie">3,84</td></tr>
+<tr><td class="rank-num" data-label="#">8</td><td data-label="Nazwisko / pseudonim">Zimmerman</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/1429/naruciak" target="_blank">Naruciak</a></td><td class="rank-followers" data-label="Subskrybenci">3 850 000</td><td class="rank-eng" data-label="Zaangażowanie">4,73</td></tr>
+<tr><td class="rank-num" data-label="#">9</td><td data-label="Nazwisko / pseudonim">Wardęga</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/831/sa-wardega" target="_blank">SA Wardega</a></td><td class="rank-followers" data-label="Subskrybenci">3 500 000</td><td class="rank-eng" data-label="Zaangażowanie">4,16</td></tr>
+<tr><td class="rank-num" data-label="#">10</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/12851/sbm" target="_blank">SBM</a></td><td class="rank-followers" data-label="Subskrybenci">3 460 000</td><td class="rank-eng" data-label="Zaangażowanie">4,42</td></tr>
+<tr><td class="rank-num" data-label="#">11</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/1428/abstrachujetv" target="_blank">AbstrachujeTV</a></td><td class="rank-followers" data-label="Subskrybenci">3 360 000</td><td class="rank-eng" data-label="Zaangażowanie">4,31</td></tr>
+<tr><td class="rank-num" data-label="#">12</td><td data-label="Nazwisko / pseudonim">Kasprzyk</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/5113/isamu" target="_blank">IsAmU</a></td><td class="rank-followers" data-label="Subskrybenci">2 850 000</td><td class="rank-eng" data-label="Zaangażowanie">4,85</td></tr>
+<tr><td class="rank-num" data-label="#">13</td><td data-label="Nazwisko / pseudonim">Makarewicz</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/6563/planeta-faktow" target="_blank">Planeta Faktów</a></td><td class="rank-followers" data-label="Subskrybenci">2 780 000</td><td class="rank-eng" data-label="Zaangażowanie">4,36</td></tr>
+<tr><td class="rank-num" data-label="#">14</td><td data-label="Nazwisko / pseudonim">Sowa (Wersow)</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/13692/wersow" target="_blank">WERSOW</a></td><td class="rank-followers" data-label="Subskrybenci">2 760 000</td><td class="rank-eng" data-label="Zaangażowanie">4,25</td></tr>
+<tr><td class="rank-num" data-label="#">15</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/12878/baby-dinosaurs-excavators" target="_blank">Baby Dinosaurs - Excavators</a></td><td class="rank-followers" data-label="Subskrybenci">2 740 000</td><td class="rank-eng" data-label="Zaangażowanie">2,53</td></tr>
+<tr><td class="rank-num" data-label="#">16</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/6574/kaluch" target="_blank">Kaluch</a></td><td class="rank-followers" data-label="Subskrybenci">2 710 000</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">17</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/1728/admiros" target="_blank">Admiros</a></td><td class="rank-followers" data-label="Subskrybenci">2 710 000</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">18</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/1436/spinka-film-studio-official" target="_blank">SPInka Film Studio</a></td><td class="rank-followers" data-label="Subskrybenci">2 620 000</td><td class="rank-eng" data-label="Zaangażowanie">4,06</td></tr>
+<tr><td class="rank-num" data-label="#">19</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/13039/tvnpl" target="_blank">tvn.pl</a></td><td class="rank-followers" data-label="Subskrybenci">2 610 000</td><td class="rank-eng" data-label="Zaangażowanie">2,81</td></tr>
+<tr><td class="rank-num" data-label="#">20</td><td data-label="Nazwisko / pseudonim">Witkowki</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/1433/vito-minecraft" target="_blank">Vito Minecraft</a></td><td class="rank-followers" data-label="Subskrybenci">2 570 000</td><td class="rank-eng" data-label="Zaangażowanie">3,09</td></tr>
+<tr><td class="rank-num" data-label="#">21</td><td data-label="Nazwisko / pseudonim">Wiewiórski</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/8117/sitr0x" target="_blank">Sitr0x</a></td><td class="rank-followers" data-label="Subskrybenci">2 510 000</td><td class="rank-eng" data-label="Zaangażowanie">4,17</td></tr>
+<tr><td class="rank-num" data-label="#">22</td><td data-label="Nazwisko / pseudonim">Górski</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/5617/thenitrozyniak" target="_blank">TheNitroZyniak</a></td><td class="rank-followers" data-label="Subskrybenci">2 450 000</td><td class="rank-eng" data-label="Zaangażowanie">4,89</td></tr>
+<tr><td class="rank-num" data-label="#">23</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/13695/ekipa" target="_blank">EKIPA</a></td><td class="rank-followers" data-label="Subskrybenci">2 410 000</td><td class="rank-eng" data-label="Zaangażowanie">4,22</td></tr>
+<tr><td class="rank-num" data-label="#">24</td><td data-label="Nazwisko / pseudonim">Maczacza</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/22043/smileslow" target="_blank">SmileSlow</a></td><td class="rank-followers" data-label="Subskrybenci">2 390 000</td><td class="rank-eng" data-label="Zaangażowanie">4,00</td></tr>
+<tr><td class="rank-num" data-label="#">25</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/12871/resinwoodart-jedrek29t" target="_blank">ResinWoodArt</a></td><td class="rank-followers" data-label="Subskrybenci">2 390 000</td><td class="rank-eng" data-label="Zaangażowanie">3,08</td></tr>
+<tr><td class="rank-num" data-label="#">26</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/5128/gplay-minecraft-jest-nasz" target="_blank">GPlay: Minecraft Jest Nasz!</a></td><td class="rank-followers" data-label="Subskrybenci">2 340 000</td><td class="rank-eng" data-label="Zaangażowanie">3,18</td></tr>
+<tr><td class="rank-num" data-label="#">27</td><td data-label="Nazwisko / pseudonim">Dąbrowski</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/5116/karolek" target="_blank">Karolek</a></td><td class="rank-followers" data-label="Subskrybenci">2 310 000</td><td class="rank-eng" data-label="Zaangażowanie">4,21</td></tr>
+<tr><td class="rank-num" data-label="#">28</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/1430/5-sposobow-na" target="_blank">5 Sposobów na...</a></td><td class="rank-followers" data-label="Subskrybenci">2 290 000</td><td class="rank-eng" data-label="Zaangażowanie">4,71</td></tr>
+<tr><td class="rank-num" data-label="#">29</td><td data-label="Nazwisko / pseudonim">Nyczke</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/5619/ksiazulo" target="_blank">Książulo</a></td><td class="rank-followers" data-label="Subskrybenci">2 260 000</td><td class="rank-eng" data-label="Zaangażowanie">4,40</td></tr>
+<tr><td class="rank-num" data-label="#">30</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/1446/wojan" target="_blank">Wojan</a></td><td class="rank-followers" data-label="Subskrybenci">2 240 000</td><td class="rank-eng" data-label="Zaangażowanie">3,56</td></tr>
+<tr><td class="rank-num" data-label="#">31</td><td data-label="Nazwisko / pseudonim">Midwuhrw</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/5647/young-multi-yfl" target="_blank">YOUNG MULTI &amp; YFL</a></td><td class="rank-followers" data-label="Subskrybenci">2 220 000</td><td class="rank-eng" data-label="Zaangażowanie">4,78</td></tr>
+<tr><td class="rank-num" data-label="#">32</td><td data-label="Nazwisko / pseudonim">Wawrzyniak</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/12946/kamerzysta" target="_blank">Kamerzysta</a></td><td class="rank-followers" data-label="Subskrybenci">2 210 000</td><td class="rank-eng" data-label="Zaangażowanie">3,19</td></tr>
+<tr><td class="rank-num" data-label="#">33</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/12880/enduro-kex" target="_blank">Enduro KeX</a></td><td class="rank-followers" data-label="Subskrybenci">2 190 000</td><td class="rank-eng" data-label="Zaangażowanie">3,60</td></tr>
+<tr><td class="rank-num" data-label="#">34</td><td data-label="Nazwisko / pseudonim">Gutkowski</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/6573/kali" target="_blank">Kali</a></td><td class="rank-followers" data-label="Subskrybenci">2 190 000</td><td class="rank-eng" data-label="Zaangażowanie">4,07</td></tr>
+<tr><td class="rank-num" data-label="#">35</td><td data-label="Nazwisko / pseudonim">Działowy</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/1434/gimper" target="_blank">Gimper</a></td><td class="rank-followers" data-label="Subskrybenci">2 180 000</td><td class="rank-eng" data-label="Zaangażowanie">4,78</td></tr>
+<tr><td class="rank-num" data-label="#">36</td><td data-label="Nazwisko / pseudonim">Skowyrski</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/5109/izak-live" target="_blank">izak LIVE</a></td><td class="rank-followers" data-label="Subskrybenci">2 160 000</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">37</td><td data-label="Nazwisko / pseudonim">Woźnica</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/1442/dizowskyy" target="_blank">Dizowskyy</a></td><td class="rank-followers" data-label="Subskrybenci">2 140 000</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">38</td><td data-label="Nazwisko / pseudonim">Wrotniak</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/555/jacob" target="_blank">Jacob</a></td><td class="rank-followers" data-label="Subskrybenci">2 100 000</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">39</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/24698/jasna-strona" target="_blank">JASNA STRONA</a></td><td class="rank-followers" data-label="Subskrybenci">2 090 000</td><td class="rank-eng" data-label="Zaangażowanie">3,89</td></tr>
+<tr><td class="rank-num" data-label="#">40</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/12855/palion" target="_blank">Palion</a></td><td class="rank-followers" data-label="Subskrybenci">2 060 000</td><td class="rank-eng" data-label="Zaangażowanie">3,90</td></tr>
+<tr><td class="rank-num" data-label="#">41</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/12850/babys-adventure" target="_blank">Baby's Adventure</a></td><td class="rank-followers" data-label="Subskrybenci">2 040 000</td><td class="rank-eng" data-label="Zaangażowanie">2,63</td></tr>
+<tr><td class="rank-num" data-label="#">42</td><td data-label="Nazwisko / pseudonim">Pawlak</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/4765/deejaypallaside" target="_blank">DeeJayPallaside</a></td><td class="rank-followers" data-label="Subskrybenci">1 970 000</td><td class="rank-eng" data-label="Zaangażowanie">3,96</td></tr>
+<tr><td class="rank-num" data-label="#">43</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/12873/lorechirik" target="_blank">LoreChirik</a></td><td class="rank-followers" data-label="Subskrybenci">1 940 000</td><td class="rank-eng" data-label="Zaangażowanie">3,20</td></tr>
+<tr><td class="rank-num" data-label="#">44</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/12870/borcrew-official" target="_blank">BORCREW OFFICIAL</a></td><td class="rank-followers" data-label="Subskrybenci">1 930 000</td><td class="rank-eng" data-label="Zaangażowanie">3,89</td></tr>
+<tr><td class="rank-num" data-label="#">45</td><td data-label="Nazwisko / pseudonim">Trąbka</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/13101/tromba" target="_blank">Tromba</a></td><td class="rank-followers" data-label="Subskrybenci">1 920 000</td><td class="rank-eng" data-label="Zaangażowanie">4,86</td></tr>
+<tr><td class="rank-num" data-label="#">46</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/12688/waksy" target="_blank">WAKSY</a></td><td class="rank-followers" data-label="Subskrybenci">1 910 000</td><td class="rank-eng" data-label="Zaangażowanie">4,94</td></tr>
+<tr><td class="rank-num" data-label="#">47</td><td data-label="Nazwisko / pseudonim">Drewniak</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/6583/historia-bez-cenzury" target="_blank">Historia bez cenzury</a></td><td class="rank-followers" data-label="Subskrybenci">1 870 000</td><td class="rank-eng" data-label="Zaangażowanie">5,00</td></tr>
+<tr><td class="rank-num" data-label="#">48</td><td data-label="Nazwisko / pseudonim">Małczyński</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/9729/bracia-malczynscy" target="_blank">Bracia Malczyńscy</a></td><td class="rank-followers" data-label="Subskrybenci">1 830 000</td><td class="rank-eng" data-label="Zaangażowanie">4,14</td></tr>
+<tr><td class="rank-num" data-label="#">49</td><td data-label="Nazwisko / pseudonim">Rupiński</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/83/dominik-rupinski" target="_blank">Dominik Rupiński</a></td><td class="rank-followers" data-label="Subskrybenci">1 830 000</td><td class="rank-eng" data-label="Zaangażowanie">4,11</td></tr>
+<tr><td class="rank-num" data-label="#">50</td><td data-label="Nazwisko / pseudonim">—</td><td class="rank-handle" data-label="Kanał YouTube"><a href="https://ddob.com/ranking/youtube/12122/yoshi" target="_blank">Yoshi</a></td><td class="rank-followers" data-label="Subskrybenci">1 830 000</td><td class="rank-eng" data-label="Zaangażowanie">4,76</td></tr>
+</tbody>
+</table>
+</div>
+<p class="src" style="margin-top:12px;">Źródło: <a href="https://ddob.com/ranking/youtube" target="_blank">ddob.com/ranking/youtube</a> (strony 1–2, stan lipiec 2026). Top 50 (z pełnych 100 dostępnych w źródle).</p>
+</div>
+</div></div>
+</div>
+</section>
+<!-- AGENCJE FULL SERVICE -->
+<section class="category" id="agencje-fullservice">
+<h2>🏢 Agencje influencer marketingu (full-service)</h2>
+<p class="cat-desc">Reprezentują sieć twórców, planują strategię, negocjują stawki i rozliczają współpracę w imieniu marki.</p>
+<div class="list">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>GetHero</h3>
+<div class="tag-row"><span class="tag">Wrocław</span><span class="tag ff-yes">ma content family friendly</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Agencja z Wrocławia działająca ponad 10 lat, reprezentuje twórców z YouTube, Instagrama i TikToka; zespół 60+ specjalistów digital marketingu. Ma projekt „Baza” opisywany jako content family friendly oraz „Szpont” dla starszej młodzieży (pokolenie Z).</p>
+<dl class="facts">
+<dt>Zasięgi</dt><dd>Brak zbiorczej, publicznej liczby — dane per kampania/twórca</dd>
+<dt>Family friendly</dt><dd>Tak — projekt „Baza” opisany jako bezpieczna przestrzeń dla rodzin</dd>
+<dt>Wybrani twórcy</dt><dd>Kuba Norek i Marlena Sojka (motoryzacja/lifestyle); grupa „Baza” — Marta, Pola, Asia, Michał, Alan, Karol; grupa „Szpont” — Wiktoria, Malwina, Zuzia, Michał, Kuba, Zbyszek, Radek; wcześniejsze kampanie z udziałem m.in. Julii Wieniawy, Sylwii Przybysz, Pauli Jagodzińskiej, Weroniki Zalazińskiej, Zofii Kulewicz, Sitr0x, Agnieszki Grzelak i Qczaja</dd>
+</dl>
+<div class="contact-box">
+<div>📍 ul. Buforowa 4e, 52-131 Wrocław</div>
+<div>📞 733 234 500</div>
+<div>✉️ <a href="mailto:hello@gethero.pl">hello@gethero.pl</a></div>
+<div>🌐 <a href="https://gethero.pl/" target="_blank">gethero.pl</a></div>
+</div>
+<div class="src">Źródła: <a href="https://gethero.pl/" target="_blank">gethero.pl</a>, <a href="https://www.influmarketing.pl/agencje-influencer-marketing/gethero/" target="_blank">influmarketing.pl</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>Lifetube (Grupa Lifetube)</h3>
+<div class="tag-row"><span class="tag">Sieć YouTube / MCN</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Największa lokalna sieć YouTube w Europie Środkowo-Wschodniej i jedna z największych agencji influencer marketingu w Polsce. Skupia twórców YouTube (lifestyle, gaming po fuzji z grupą LTTM/Gameset, rozrywka).</p>
+<dl class="facts">
+<dt>Zasięgi</dt><dd>Ponad 850 zrzeszonych kanałów YouTube, ok. 197–240 mln subskrypcji łącznie (różne raporty), ok. 996 mln wyświetleń/mies.; regularnie współpracuje ponad 1500 twórców</dd>
+<dt>Wybrani twórcy</dt><dd>Wg Wikipedii m.in. Aleksandra Żuraw, „7 metrów pod ziemią”, Dawid Frank, Magda Bereda, „Ja Rock”, „Kameralnie”; z nowszych dołączeń m.in. Livv (Olivia) i Paweł Gołdych. Pełna lista ok. 1500 twórców nie jest publikowana zbiorczo</dd>
+<dt>Honorarium / prowizja</dt><dd>2018: 23 mln zł wypłacone twórcom za 1359 kampanii dla 321 klientów. 2022 (LTTM): średni koszt jednego pakietu współpracy z influencerem ok. 18 592 zł, łączne wypłaty ok. 70 mln zł (dane historyczne, nie aktualny cennik)</dd>
+</dl>
+<div class="contact-box">
+<div>✉️ ogólny: <a href="mailto:kontakt@lifetube.pl">kontakt@lifetube.pl</a></div>
+<div>✉️ współpraca biznesowa: <a href="mailto:wspolpraca@lifetube.pl">wspolpraca@lifetube.pl</a></div>
+<div>🌐 <a href="https://www.lifetube.pl/en" target="_blank">lifetube.pl</a></div>
+</div>
+<div class="src">Źródła: <a href="https://pl.wikipedia.org/wiki/LifeTube" target="_blank">Wikipedia — LifeTube</a>, <a href="https://media.lifetube.pl/" target="_blank">media.lifetube.pl</a>, <a href="https://www.lifetube.pl/en/knowledge-base/summary-of-the-year-2022" target="_blank">lifetube.pl (podsumowanie 2022)</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>Friends&amp;Brands</h3>
+<div class="tag-row"><span class="tag">Agencja + platforma</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Agencja od 2015 r., łączy funkcję agencji strategicznej i platformy self-service z bazą twórców — nano (1 000–5 000 obserwujących), mikro i twórców content marketingowych. Realizuje też kampanie 360°.</p>
+<dl class="facts">
+<dt>Zasięgi / baza</dt><dd>Deklarowane 35 000 „sprawdzonych” influencerów w bazie</dd>
+<dt>Honorarium / prowizja</dt><dd>Zależne od kampanii — zapłata, vouchery zakupowe lub paczki produktowe; brak jawnego cennika/% prowizji</dd>
+</dl>
+<div class="contact-box">
+<div>📍 ul. Bitwy Warszawskiej 1920r 7, 02-366 Warszawa</div>
+<div>📞 22 299 08 10</div>
+<div>🌐 <a href="https://friendsandbrands.pl/" target="_blank">friendsandbrands.pl</a></div>
+</div>
+<div class="src">Źródła: <a href="https://friendsandbrands.pl/" target="_blank">friendsandbrands.pl</a>, <a href="https://influencerzy.friendsandbrands.pl/" target="_blank">influencerzy.friendsandbrands.pl</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>Spotlight Agency</h3>
+<div class="tag-row"><span class="tag">Management twórców i artystów</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Agencja powstała w lutym 2019 r., współtworzona m.in. przez influencera Stuarta Burtona (Stuu), Veronicę Bielik i Wojciecha Szaniawskiego (Arskom, SportBrokers). Reprezentuje twórców internetowych i artystów muzycznych.</p>
+<dl class="facts">
+<dt>Wybrani twórcy</dt><dd>Współzałożyciele/twórcy: Stuart Burton (Stuu), Veronica Bielik. Wśród reprezentowanych i dotychczasowych współprac: Marysia Jeleniewska, Kinga Sawczuk, Radek Pestka, Marcin Dubiel, Patrycja Mołczanow, Kamil Owczarek, a także artyści Sony Music Poland — Ania Dąbrowska i Daria Zawiałow</dd>
+</dl>
+<div class="contact-box">
+<div>✉️ <a href="mailto:hello@spotlightagency.pl">hello@spotlightagency.pl</a></div>
+<div>🌐 <a href="https://spotlightagency.pl/" target="_blank">spotlightagency.pl</a></div>
+</div>
+<div class="src">Źródła: <a href="https://www.proto.pl/aktualnosci/spotlight-agency-nowa-agencja-influencer-marketingu-na-polskim-rynku/" target="_blank">PRoto.pl</a>, <a href="https://pl.linkedin.com/company/spotlight-a" target="_blank">LinkedIn</a>, <a href="https://www.instagram.com/agencyspotlight/" target="_blank">Instagram @agencyspotlight</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>Influency</h3>
+<div class="tag-row"><span class="tag">Pierwsza agencja influencerska w PL</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Opisywana jako pierwsza w Polsce agencja influencerska skupiona na rozumieniu potrzeb marek i influencerów. Uwaga: agencja publicznie ostrzegała przed osobą podszywającą się pod jej przedstawiciela — warto weryfikować kontakt przez oficjalną stronę.</p>
+
+<div class="contact-box">
+<div>📍 ul. Puławska 99A, 02-595 Warszawa</div>
+<div>📞 22 201 32 90</div>
+<div>🌐 <a href="https://influency.pl/" target="_blank">influency.pl</a></div>
+</div>
+<div class="src">Źródła: <a href="https://influency.pl/" target="_blank">influency.pl</a>, <a href="https://influmarketing.pl/agencje-influencer-marketing/influency/" target="_blank">influmarketing.pl</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>Influently</h3>
+<div class="tag-row"><span class="tag">Agencja + management</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Agencja influencer marketingu oferująca zarówno zlecanie kampanii, jak i management twórców.</p>
+
+<div class="contact-box">
+<div>📞 +48 785 613 510</div>
+<div>✉️ <a href="mailto:czesc@influently.pl">czesc@influently.pl</a></div>
+<div>🌐 <a href="https://influently.pl/kontakt/" target="_blank">influently.pl/kontakt</a></div>
+</div>
+<div class="src">Źródło: <a href="https://influently.pl/kontakt/" target="_blank">influently.pl/kontakt</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>Influ-News</h3>
+<div class="tag-row"><span class="tag">Agencja / medium branżowe</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Podmiot z branży influencer marketingu (portal + kontakt biznesowy); warto zweryfikować aktualny zakres usług bezpośrednio przy kontakcie.</p>
+
+<div class="contact-box">
+<div>📍 ul. Rosy Bailly 30, 01-494 Warszawa</div>
+<div>📞 +48 794 507 747</div>
+<div>✉️ <a href="mailto:biuro@influ-news.pl">biuro@influ-news.pl</a></div>
+</div>
+<div class="src">Źródło: <a href="https://influ-news.pl/contact/" target="_blank">influ-news.pl/contact</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>Brandegic</h3>
+<div class="tag-row"><span class="tag">Influence Business Sp. z o.o.</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Podmiot działający pod firmą Influence Business Sp. z o.o., zarejestrowany w Zielonej Górze.</p>
+
+<div class="contact-box">
+<div>📍 ul. Kazimierza Wielkiego 7/5, 65-047 Zielona Góra</div>
+<div>📞 500 711 416</div>
+<div>✉️ <a href="mailto:office@brandegic.pl">office@brandegic.pl</a></div>
+</div>
+<div class="src">Źródło: <a href="https://brandegic.pl/kontakt/" target="_blank">brandegic.pl/kontakt</a></div>
+</div></div>
+</div>
+</div>
+</section>
+<!-- KOLEKTYWY TWÓRCÓW -->
+<section class="category" id="kolektywy">
+<h2>🎬 Kolektywy twórców i holdingi twórcze</h2>
+<p class="cat-desc">To nie klasyczne agencje pośredniczące — to własne marki/kolektywy twórców, z którymi kampanię umawia się bezpośrednio (często przez spółkę zarządzającą marką).</p>
+<div class="list">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>Ekipa (Ekipa Friza)</h3>
+<div class="tag-row"><span class="tag">Kolektyw YouTube/TikTok</span><span class="tag">Spółka giełdowa</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Polski kolektyw twórców internetowych założony w 2018 r. przez Karola „Friza” Wiśniewskiego i Łukasza „Wujka Łukiego” Wojtycę. Działalność biznesowa (merch, napoje, kampanie reklamowe) prowadzona jest przez notowaną na giełdzie spółkę Ekipa Holding S.A. z siedzibą w Krakowie. Zrealizowali m.in. głośną kampanię „Lody Ekipy” dla marki Koral oraz współprace z Energylandią i marką Donuty.</p>
+<dl class="facts">
+<dt>Zasięgi</dt><dd>Historycznie: sam Friz miał ok. 2,8 mln obserwujących na Instagramie (dane z 2021–2022, mogły się zmienić); ogólny zasięg kolektywu — brak jednej, aktualnej, zbiorczej liczby publikowanej przez spółkę</dd>
+<dt>Wybrani twórcy</dt><dd>Karol „Friz” Wiśniewski (założyciel), Łukasz „Wujek Łuki” Wojtyca (prezes zarządu spółki), a wśród najbardziej rozpoznawalnych/historycznych członków m.in.: Wersow, Tromba, Mini Majk, Murcix, Marcysia, Poczciwy Krzychu, Nowciax, Patec Wariatec, Kasia Bożek. Skład kolektywu zmieniał się na przestrzeni lat — aktualny warto zweryfikować bezpośrednio</dd>
+</dl>
+<div class="contact-box">
+<div>✉️ kontakt biznesowy / inwestorski (Ekipa Holding S.A.): <a href="mailto:k.misialkiewicz@ekipasa.pl">k.misialkiewicz@ekipasa.pl</a></div>
+<div>✉️ obsługa sklepu Ekipatonosi: <a href="mailto:kontakt@ekipatonosi.pl">kontakt@ekipatonosi.pl</a></div>
+<div>📍 siedziba: Kraków</div>
+</div>
+<div class="src">Źródła: <a href="https://pl.wikipedia.org/wiki/Ekipa_Friza" target="_blank">Wikipedia — Ekipa Friza</a>, <a href="https://kontaktinfolinia.pl/ekipa-friza" target="_blank">kontaktinfolinia.pl</a>, <a href="https://hesna.pl/blog/lody-ekipy-czyli-skuteczna-moc-influencer-marketingu/" target="_blank">hesna.pl (kampania Koral)</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>StormMedia</h3>
+<div class="tag-row"><span class="tag">400+ twórców na wyłączność</span><span class="tag">IG/YT/TikTok/Twitch/X</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Jedna z czołowych agencji influencer marketingu w Polsce i Europie, specjalizująca się w kompleksowej obsłudze kampanii z udziałem twórców internetowych na Instagramie, YouTubie, TikToku, Twitchu i X. We wrześniu 2025 r. agencja przeszła rebranding (nowa identyfikacja wizualna, rozszerzona oferta o eventy z twórcami), a w listopadzie 2025 r. nawiązała strategiczne partnerstwo z Influo Group — liderem rynku TikTok Live w Polsce — zyskując dostęp do ponad 1500 aktywnych twórców TikTok Live.</p>
+<dl class="facts">
+<dt>Zasięgi</dt><dd>Ponad 400 czołowych twórców na wyłączność (deklaracja własna); dzięki partnerstwu z Influo Group — dodatkowy dostęp do ponad 1500 twórców TikTok Live docierających łącznie do ponad 50 mln odbiorców miesięcznie</dd>
+<dt>Wybrani twórcy / kampanie</dt><dd>Ponad 2000 zrealizowanych kampanii dla marek w Polsce i Europie, w tym m.in. dla NVIDIA (9 twórców, ponad 1,7 mln wyświetleń), Capri Sun (z udziałem twórcy Justek Freestyle) oraz twórca „Poskładanny” (LEGO stop-motion)</dd>
+</dl>
+<div class="contact-box">
+<div>📍 Domaniewska 37/2. 43, 02-672 Warszawa</div>
+<div>✉️ dla marek (nowy biznes): <a href="mailto:newbusiness@stormmedia.gg">newbusiness@stormmedia.gg</a></div>
+<div>✉️ dla twórców: <a href="mailto:creators@stormmedia.gg">creators@stormmedia.gg</a></div>
+<div>✉️ pozostałe zapytania: <a href="mailto:contact@stormmedia.gg">contact@stormmedia.gg</a></div>
+<div>🌐 <a href="https://stormmedia.gg/en" target="_blank">stormmedia.gg</a></div>
+</div>
+<div class="src">Źródła: <a href="https://stormmedia.gg/en/contact" target="_blank">stormmedia.gg/en/contact</a>, <a href="https://nowymarketing.pl/stormmedia-nowe-rozdanie-w-influencer-marketingu/" target="_blank">NowyMarketing.pl</a>, <a href="https://thepartners.com.pl/nowa-era-influencer-marketingu-strategiczne-partnerstwo-influo-group-i-stormmedia/" target="_blank">ThePartners.com.pl</a>, <a href="https://pl.linkedin.com/company/stormmediagg" target="_blank">LinkedIn StormMedia</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>InfluPartner</h3>
+<div class="tag-row"><span class="tag">Beauty / comedy / culinary / parenting</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Management i kampanie, w tym PR boxes, eventy i wyjazdy z twórcami. Roster obejmuje twórców z kategorii beauty, comedy, kulinarnej, parentingowej i lifestylowej.</p>
+<dl class="facts">
+<dt>Wybrani twórcy</dt><dd>M.in. Agnes Ratajczak (comedy), Eliza Wolnik / Makeupelza (beauty), Kamila Cieśla / Soo Good Food (culinary), A&amp;K Zieliniaki (parenting), Noemi Majchrzak (lifestyle)</dd>
+</dl>
+<div class="contact-box">
+<div>✉️ dział sprzedaży: <a href="mailto:sprzedaz@influpartner.pl">sprzedaz@influpartner.pl</a></div>
+<div>✉️ kontakt ogólny: <a href="mailto:kontakt@influpartner.pl">kontakt@influpartner.pl</a></div>
+<div>🌐 <a href="https://influpartner.pl/" target="_blank">influpartner.pl</a></div>
+</div>
+<div class="src">Źródło: <a href="https://influpartner.pl/" target="_blank">influpartner.pl</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>Rokmates</h3>
+<div class="tag-row"><span class="tag">TikTok / YouTube / IG / Twitch</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Kompleksowe kampanie, management, płatne działania na TikToku i eventy z twórcami — obejmuje praktycznie wszystkie segmenty i platformy.</p>
+<dl class="facts">
+<dt>Wybrani twórcy / współprace</dt><dd>W case studies i realizacjach wymieniano m.in. Palion (gaming, młodzi odbiorcy), Klaudię Halejcio (lifestyle/celebrity) i Cezarego Pazurę (aktor/celebrity)</dd>
+<dt>Honorarium / prowizja</dt><dd>Brak ogólnego cennika, ale w case study dla marki Speakly (długoterminowe działania performance na TikToku) podano średnie CPA na poziomie 3,91 zł — to wynik konkretnej kampanii, nie uniwersalna stawka</dd>
+</dl>
+<div class="contact-box">
+<div>✉️ <a href="mailto:contact@rokmates.com">contact@rokmates.com</a></div>
+<div>📞 513 136 042 (kontakt prasowy/strategia)</div>
+<div>🌐 <a href="https://rokmates.com/" target="_blank">rokmates.com</a></div>
+</div>
+<div class="src">Źródła: <a href="https://rokmates.com/" target="_blank">rokmates.com</a>, <a href="https://rokmates.com/zespol/speakly-dlugoterminowe-dzialania-performance-natiktoku/" target="_blank">case study Speakly</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>DDOB (agencja)</h3>
+<div class="tag-row"><span class="tag">TikTok / młode grupy</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Strategie i długofalowe kampanie end-to-end: content, UGC, podcasty i eventy. Ta sama marka co ranking Top 100 wyżej w katalogu — DDOB prowadzi zarówno agencję, jak i publiczny ranking Instagramerów.</p>
+
+<div class="contact-box">
+<div>🌐 formularz „Pogadajmy”: <a href="https://www.ddob.pl/" target="_blank">ddob.pl</a></div>
+</div>
+<div class="src">Źródło: <a href="https://www.ddob.pl/" target="_blank">ddob.pl</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>Gameset</h3>
+<div class="tag-row"><span class="tag">Gaming / esport / Twitch</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Agencja specjalizująca się w gamingu, esporcie i nowych technologiach — dobry wybór, gdy kampania celuje w społeczność Twitcha/YouTube gaming.</p>
+
+<div class="contact-box">
+<div>🌐 <a href="https://gameset.pl/" target="_blank">gameset.pl</a></div>
+</div>
+<div class="src">Źródło: <a href="https://gameset.pl/" target="_blank">gameset.pl</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>DmG</h3>
+<div class="tag-row"><span class="tag">TikTok 360</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Niezależna agencja influencer marketingu skupiona na kampaniach TikTok 360 oraz Instagram i YouTube.</p>
+
+<div class="contact-box">
+<div>🌐 <a href="https://dmg.pl/" target="_blank">dmg.pl</a></div>
+</div>
+<div class="src">Źródło: <a href="https://dmg.pl/" target="_blank">dmg.pl</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>M4 Agency</h3>
+<div class="tag-row"><span class="tag">Topowi influencerzy</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Influencer marketing i pełny management twórców, z naciskiem na topowych influencerów i pełne kampanie digital.</p>
+
+<div class="contact-box">
+<div>✉️ <a href="mailto:info@m4agency.pl">info@m4agency.pl</a></div>
+<div>🌐 <a href="https://www.m4agency.pl/" target="_blank">m4agency.pl</a></div>
+</div>
+<div class="src">Źródło: <a href="https://www.m4agency.pl/" target="_blank">m4agency.pl</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>WE!RE Fantasy</h3>
+<div class="tag-row"><span class="tag">YouTube / monetyzacja</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Management i wsparcie strategiczne z naciskiem na zaplecze YouTube i monetyzację kanałów, plus szeroki rynek twórców.</p>
+
+<div class="contact-box">
+<div>🌐 <a href="https://werefantasy.com/" target="_blank">werefantasy.com</a></div>
+</div>
+<div class="src">Źródło: <a href="https://werefantasy.com/" target="_blank">werefantasy.com</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>Collab Management</h3>
+<div class="tag-row"><span class="tag">Beauty / fashion</span><span class="tag">Butikowa, na wyłączność</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Butikowy management twórców działający na zasadzie współpracy na wyłączność, skoncentrowany na kategoriach beauty i fashion.</p>
+
+<div class="contact-box">
+<div>🌐 profil w katalogu IAB Polska: <a href="https://mapa.iab.org.pl/collab-management/" target="_blank">mapa.iab.org.pl/collab-management</a></div>
+</div>
+<div class="src">Źródło: <a href="https://mapa.iab.org.pl/collab-management/" target="_blank">mapa.iab.org.pl</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>Lemon Media</h3>
+<div class="tag-row"><span class="tag">Kampanie PL/DE</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Kampanie influencer marketingowe realizowane transgranicznie — w Polsce i w Niemczech.</p>
+
+<div class="contact-box">
+<div>📞 +48 609 179 007</div>
+<div>🌐 <a href="https://lemonmedia.pl/influencer-marketing/" target="_blank">lemonmedia.pl</a></div>
+</div>
+<div class="src">Źródło: <a href="https://lemonmedia.pl/influencer-marketing/" target="_blank">lemonmedia.pl</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>Płodni.com</h3>
+<div class="tag-row"><span class="tag">Parenting / eventy / lifestyle</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Agencja marketingowa i PR realizująca też działania z influencerami, m.in. w kategorii parenting, eventy i lifestyle.</p>
+
+<div class="contact-box">
+<div>✉️ <a href="mailto:biuro@plodni.com">biuro@plodni.com</a></div>
+<div>🌐 <a href="https://plodni.com/uslugi/influencer-marketing/" target="_blank">plodni.com</a></div>
+</div>
+<div class="src">Źródło: <a href="https://plodni.com/uslugi/influencer-marketing/" target="_blank">plodni.com</a></div>
+</div></div>
+</div>
+</div>
+</section>
+<!-- PLATFORMY -->
+<section class="category" id="platformy">
+<h2>🛒 Platformy / giełdy influencerów (jawne ceny)</h2>
+<p class="cat-desc">Marka sama przegląda oferty tysięcy twórców i widzi realne ceny publikacji.</p>
+<div class="list">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>Reach a Blogger</h3>
+<div class="tag-row"><span class="tag">Marketplace</span><span class="tag">Jawny cennik</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Jedna z najbardziej rozpoznawalnych w Polsce platform łączących marki/agencje z blogerami, influencerami i youtuberami. Cała komunikacja, oferty, umowy i rozliczenia (w tym PIT-y) odbywają się przez platformę.</p>
+<dl class="facts">
+<dt>Baza twórców</dt><dd>Ponad 5 200 ofert influencerów (blogi, Instagram, Facebook, YouTube, TikTok i inne)</dd>
+<dt>Zakres cen</dt><dd>Od ok. 50 zł do ok. 45 000 zł za pojedynczą współpracę (relacja użytkownika platformy, SmartAge.pl)</dd>
+<dt>Prowizja</dt><dd>Zgodnie z artykułem samej platformy: 15% — opisywane jako najniższa i zawsze transparentna prowizja na rynku, pobierana od influencera po zrealizowaniu współpracy (starszy cennik z 2018 r. podawał 10% + ryczałt 5 zł netto od barteru; artykuł potwierdzający 15% pochodzi z ok. 2020 r. — przed zakupem potwierdź aktualny cennik na stronie)</dd>
+</dl>
+<div class="contact-box">
+<div>🌐 <a href="https://reachablogger.pl/kontakt/" target="_blank">reachablogger.pl/kontakt</a></div>
+</div>
+<div class="src">Źródła: <a href="https://reachablogger.pl/faq/" target="_blank">reachablogger.pl/faq</a>, <a href="https://reachablogger.pl/blog/platforma-reach-a-blogger-pobiera-15-prowizji-najnizsza-prowizja-rynku-zawsze-transparentna/" target="_blank">reachablogger.pl — artykuł o prowizji 15%</a>, <a href="https://www.smartage.pl/reach-a-blogger-platforma-wspolpracy-z-influencerami/" target="_blank">SmartAge.pl</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>WhitePress</h3>
+<div class="tag-row"><span class="tag">Marketplace</span><span class="tag">Konto darmowe</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Wyszukiwarka influencerów z wizytówkami twórców, strefą ogłoszeń i systemem rozliczeń — szerzej znana z publikacji sponsorowanych/SEO, ale obejmuje też influencer marketing.</p>
+<dl class="facts">
+<dt>Koszty</dt><dd>Wg FAQ platformy: założenie konta, wizytówka influencera i Strefa Ogłoszeń są bezpłatne; pozostałe koszty zależą od konkretnej zamawianej usługi</dd>
+</dl>
+<div class="contact-box">
+<div>🌐 <a href="https://www.whitepress.com/pl/faq" target="_blank">whitepress.com/pl/faq</a></div>
+</div>
+<div class="src">Źródło: <a href="https://www.whitepress.com/pl/faq" target="_blank">whitepress.com/pl/faq</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>indaHash</h3>
+<div class="tag-row"><span class="tag">Globalna platforma + agencja</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Globalna platforma i agencja end-to-end realizująca kampanie influencer marketingowe w oparciu o dane — obecna też na rynku polskim.</p>
+
+<div class="contact-box">
+<div>🌐 <a href="https://indahash.com/" target="_blank">indahash.com</a></div>
+</div>
+<div class="src">Źródło: <a href="https://indahash.com/" target="_blank">indahash.com</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>Modash</h3>
+<div class="tag-row"><span class="tag">Narzędzie discovery/analityka</span><span class="tag">Jawny cennik</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Narzędzie (nie agencja) do wyszukiwania twórców, analizy odbiorców i autentyczności obserwujących oraz monitoringu kampanii — dobre uzupełnienie audytu brand-safety przed podpisaniem umowy.</p>
+<dl class="facts">
+<dt>Koszty</dt><dd>Publiczny cennik subskrypcyjny dostępny na stronie — to opłata za narzędzie, nie za honoraria influencerów; sprawdź aktualne stawki w dniu zakupu</dd>
+</dl>
+<div class="contact-box">
+<div>🌐 <a href="https://www.modash.io/pl/cennik" target="_blank">modash.io/pl/cennik</a></div>
+</div>
+<div class="src">Źródło: <a href="https://www.modash.io/pl/cennik" target="_blank">modash.io/pl/cennik</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>Mikroinfluencerzy.pl</h3>
+<div class="tag-row"><span class="tag">Self-service, mikroinfluencerzy</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Platforma self-service do wyszukiwania mikroinfluencerów i samodzielnego uruchamiania kampanii — dobra dla mniejszych budżetów i testowania wielu twórców naraz.</p>
+
+<div class="contact-box">
+<div>🌐 <a href="https://mikroinfluencerzy.pl/platforma-influencer-marketing" target="_blank">mikroinfluencerzy.pl</a></div>
+</div>
+<div class="src">Źródło: <a href="https://mikroinfluencerzy.pl/platforma-influencer-marketing" target="_blank">mikroinfluencerzy.pl</a></div>
+</div></div>
+</div>
+</div>
+</section>
+<!-- BAZA TWÓRCÓW -->
+<section class="category" id="baza-tworcow">
+<h2>🧑‍🎤 Baza wybranych twórców i osób publicznych</h2>
+<p class="cat-desc">To nie ranking — to lista konkretnych twórców wskazanych w publicznych rosterach agencji lub ich case studies, razem z roboczą oceną brand-safety. Lista domyślnie schowana — kliknij, by rozwinąć.</p>
+<div class="rank-note">
+<strong>Jak czytać ocenę brand-safety:</strong> to robocza kwalifikacja redakcyjna na podstawie kategorii treści, a nie wynik pełnego audytu. 🟢 <strong>Prawdopodobnie odpowiedni</strong> — kulinarne, parentingowe, edukacyjne, podróżnicze, lifestylowe bez oczywistego podwyższonego ryzyka. 🟡 <strong>Wymaga audytu</strong> — rozrywka, gaming, commentary, humor, szeroki lifestyle; dopasowanie zależy od konkretnych publikacji. 🔴 <strong>Podwyższone ryzyko</strong> — ostrzejszy język, kontrowersje, demaskowanie, alkohol, hazard, seksualność, silnie polaryzujące tematy. Żadna ocena nie zastępuje audytu ostatnich publikacji przed kampanią.
+    </div>
+<div class="item" id="creatorsAccordion">
+<div class="item-head" onclick="toggleRanking(this)">
+<div class="left">
+<h3>🧑‍🎤 Pokaż / ukryj bazę twórców</h3>
+<div class="tag-row"><span class="tag">37 pozycji</span><span class="tag">źródła: StormMedia, InfluPartner, Rokmates, GetHero, Spotlight</span></div>
+</div>
+<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
+</div>
+<div class="item-body"><div class="item-body-inner">
+<input class="rank-search" id="creatorSearch" onkeyup="filterCreators()" placeholder="🔍 Szukaj po nazwisku, pseudonimie lub kategorii…" type="text"/>
+<div class="creator-grid" id="creatorGrid"><div class="creator-tile"><div class="ct-name"><strong>Isamu</strong></div><div class="ct-cat">Entertainment</div><div class="ct-reach">YT 2 830 000 · IG 1 200 306 · TT 695 132</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Admiros</strong></div><div class="ct-cat">Gaming</div><div class="ct-reach">YT 2 420 000 · IG 90 521 · TT 466 492</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Karolek</strong></div><div class="ct-cat">Entertainment</div><div class="ct-reach">YT 2 300 000 · IG 555 490</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Millo</strong></div><div class="ct-cat">Lifestyle</div><div class="ct-reach">YT 1 890 000 · IG 160 734 · TT 355 931</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Yoshi</strong></div><div class="ct-cat">Lifestyle</div><div class="ct-reach">YT 1 740 000 · IG 521 643 · TT 423 810</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Zebo</strong></div><div class="ct-cat">Commentary</div><div class="ct-reach">YT 1 690 000</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-red">🔴 Podwyższone ryzyko</span></div><div class="creator-tile"><div class="ct-name"><strong>Niekryty Krytyk</strong></div><div class="ct-cat">Commentary</div><div class="ct-reach">YT 1 610 000 · IG 43 567 · TT 269</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-red">🔴 Podwyższone ryzyko</span></div><div class="creator-tile"><div class="ct-name"><strong>Lakarnum</strong></div><div class="ct-cat">Commentary</div><div class="ct-reach">YT 1 500 000 · IG 254 689 · TT 351 162</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-red">🔴 Podwyższone ryzyko</span></div><div class="creator-tile"><div class="ct-name"><strong>TOP10wszystkiego</strong></div><div class="ct-cat">Entertainment / rankingi</div><div class="ct-reach">YT 1 400 000</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>GilathissNew</strong></div><div class="ct-cat">Gaming</div><div class="ct-reach">YT 1 320 000 · IG 101 449</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Agnes Ratajczak</strong></div><div class="ct-cat">Comedy</div><div class="ct-reach">TikTok/IG/YouTube @agnesratajczak(offcial)</div><div class="ct-mgmt">🏢 InfluPartner</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Eliza Wolnik (Makeupelza)</strong></div><div class="ct-cat">Beauty</div><div class="ct-reach">TikTok/IG @makeupelza</div><div class="ct-mgmt">🏢 InfluPartner</div><span class="ct-badge badge-green">🟢 Prawdopodobnie odpowiedni</span></div><div class="creator-tile"><div class="ct-name"><strong>Kamila Cieśla (Soo Good Food)</strong></div><div class="ct-cat">Culinary</div><div class="ct-reach">TikTok/IG @soo.good.food · YT @soogoodfood</div><div class="ct-mgmt">🏢 InfluPartner</div><span class="ct-badge badge-green">🟢 Prawdopodobnie odpowiedni</span></div><div class="creator-tile"><div class="ct-name"><strong>A&amp;K Zieliniaki</strong></div><div class="ct-cat">Parenting</div><div class="ct-reach">TikTok @zieliniaki · IG @zieliniaki.official</div><div class="ct-mgmt">🏢 InfluPartner</div><span class="ct-badge badge-green">🟢 Prawdopodobnie odpowiedni*</span></div><div class="creator-tile"><div class="ct-name"><strong>Noemi Majchrzak</strong></div><div class="ct-cat">Lifestyle</div><div class="ct-reach">TikTok @noemimajchrzak1 · IG @noemimajchrzak</div><div class="ct-mgmt">🏢 InfluPartner</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>AdBuster</strong></div><div class="ct-cat">Testy / consumer / tech</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Detailer</strong></div><div class="ct-cat">Motoryzacja / detailing</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-green">🟢 Prawdopodobnie odpowiedni</span></div><div class="creator-tile"><div class="ct-name"><strong>Dla Pieniędzy</strong></div><div class="ct-cat">Finanse / biznes</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu**</span></div><div class="creator-tile"><div class="ct-name"><strong>KamilEater</strong></div><div class="ct-cat">Food</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-green">🟢 Prawdopodobnie odpowiedni</span></div><div class="creator-tile"><div class="ct-name"><strong>Snax</strong></div><div class="ct-cat">Gaming / esport</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Tivolt</strong></div><div class="ct-cat">Gaming</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Ziemniak</strong></div><div class="ct-cat">Tech / gaming / commentary</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Żądny Przygód</strong></div><div class="ct-cat">Travel / adventure</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-green">🟢 Prawdopodobnie odpowiedni</span></div><div class="creator-tile"><div class="ct-name"><strong>Brokies</strong></div><div class="ct-cat">Lifestyle / entertainment</div><div class="ct-reach">IG 277 398 · YT 162 000</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Palion</strong></div><div class="ct-cat">Gaming / młodzi odbiorcy</div><div class="ct-mgmt">🏢 Rokmates</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu***</span></div><div class="creator-tile"><div class="ct-name"><strong>Klaudia Halejcio</strong></div><div class="ct-cat">Celebrity / lifestyle</div><div class="ct-reach">IG ok. 1,17 mln (patrz Top 100 wyżej)</div><div class="ct-mgmt">🏢 zależnie od kampanii, m.in. Rokmates</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Cezary Pazura</strong></div><div class="ct-cat">Aktor / celebrity</div><div class="ct-mgmt">🏢 zależnie od kampanii, m.in. Rokmates</div><span class="ct-badge badge-green">🟢 Prawdopodobnie odpowiedni</span></div><div class="creator-tile"><div class="ct-name"><strong>Wujek Paolo</strong></div><div class="ct-cat">Lifestyle / kulinarne (pizza)</div><div class="ct-reach">IG 66 954 · YT 312 000 · TT 341 465</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-green">🟢 Prawdopodobnie odpowiedni</span></div><div class="creator-tile"><div class="ct-name"><strong>SzopDemaskuje</strong></div><div class="ct-cat">Commentary</div><div class="ct-reach">YT 161 000</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-red">🔴 Podwyższone ryzyko</span></div><div class="creator-tile"><div class="ct-name"><strong>Poskładanny</strong></div><div class="ct-cat">Entertainment (LEGO, family friendly)</div><div class="ct-reach">IG 12 387 · YT 458 000</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-green">🟢 Prawdopodobnie odpowiedni</span></div><div class="creator-tile"><div class="ct-name"><strong>Testree</strong></div><div class="ct-cat">Gaming / esport</div><div class="ct-reach">IG 22 032 · Twitch 125 955</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Andrew Gazda</strong></div><div class="ct-cat">Entertainment / fitness</div><div class="ct-reach">IG 191 326 · TT 786 557 · Twitch 7 700</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Bowi (Bożena Cisło)</strong></div><div class="ct-cat">Automotive</div><div class="ct-reach">IG 303 371 · YT 157 000 · TT 134 990</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-green">🟢 Prawdopodobnie odpowiedni</span></div><div class="creator-tile"><div class="ct-name"><strong>Kacper Rietz</strong></div><div class="ct-cat">Entertainment (komentarz TikToków/memów)</div><div class="ct-reach">IG 141 448 · YT 1 110 000 · TT 218 562</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Kuba Norek i Marlena Sojka</strong></div><div class="ct-cat">Motoryzacja / lifestyle</div><div class="ct-mgmt">🏢 GetHero</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Kamil Owczarek</strong></div><div class="ct-cat">Lifestyle</div><div class="ct-mgmt">🏢 Spotlight Agency</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Patrycja Mołczanow</strong></div><div class="ct-cat">Fashion / lifestyle</div><div class="ct-mgmt">🏢 Spotlight Agency</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div></div>
+<p class="src" style="margin-top:12px;">* Parenting: przed kampanią zweryfikuj zasady wykorzystania wizerunku dzieci i zgody opiekunów. ** Finanse to kategoria wysokiej odpowiedzialności — wymagana weryfikacja prawna claimów. *** Duża atrakcyjność dla młodszych odbiorców — konieczna szczególna zgodność z zasadami reklamy kierowanej do dzieci.</p>
+<p class="src">Źródła: <a href="https://stormmedia.gg/pl/creators" target="_blank">stormmedia.gg/pl/creators</a> (w tym indywidualne podstrony twórców z dokładnymi zasięgami), <a href="https://influpartner.pl/" target="_blank">influpartner.pl</a>, <a href="https://rokmates.com/" target="_blank">rokmates.com</a>, <a href="https://gethero.pl/" target="_blank">gethero.pl</a>, <a href="https://pl.linkedin.com/company/spotlight-a" target="_blank">LinkedIn Spotlight Agency</a>. Roboczy katalog własny na podstawie tych źródeł, stan na 22.07.2026 — przed kampanią potwierdź aktualne zasięgi, dostępność i ocenę.</p>
+</div></div>
+</div>
+</section>
+<!-- AGENCJE GWIAZD -->
+<section class="category" id="agencje-gwiazd">
+<h2>🌟 Agencje gwiazd, celebrytów i impresariaty</h2>
+<p class="cat-desc">Osoby znane z telewizji, sportu, muzyki i show-biznesu — kampanie wizerunkowe, eventy, ambasadorstwo.</p>
+<div class="list">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>Famous People®</h3>
+<div class="tag-row"><span class="tag">Agent gwiazd</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Agencja prowadzona przez Magdalenę Gatkowską (ok. 20 lat doświadczenia jako agentka/managerka gwiazd). Reprezentuje dziennikarzy, prezenterów, aktorów, a także influencerów i celebrytów.</p>
+<dl class="facts">
+<dt>Wybrani twórcy</dt><dd>Prowadzi „Bazę Osób” dostępną po kontakcie, bez publikowania pełnych nazwisk on-line — podane są jedynie role/profesje, np. „dziennikarz/prezenter/konferansjer”. Pełną dostępność gwiazd trzeba potwierdzić u agentki</dd>
+</dl>
+<div class="contact-box">
+<div>🌐 <a href="https://famouspeople.pl/agencja-znanych-osob/" target="_blank">famouspeople.pl</a></div>
+</div>
+<div class="src">Źródła: <a href="https://famouspeople.pl/agencja-znanych-osob/" target="_blank">famouspeople.pl</a>, <a href="https://famouspeople.pl/jak-znalezc-kontakt-do-znanej-osoby/" target="_blank">famouspeople.pl (kontakt)</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>Ministerstwo Gwiazd</h3>
+<div class="tag-row"><span class="tag">Impresariat celebrytów</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Impresariat z ponad 20-letnim doświadczeniem, organizujący udział gwiazd sportu, telewizji i estrady w eventach firmowych, galach oraz kampaniach reklamowych i wizerunkowych.</p>
+
+<div class="contact-box">
+<div>🌐 <a href="https://ministerstwogwiazd.pl/" target="_blank">ministerstwogwiazd.pl</a></div>
+</div>
+<div class="src">Źródło: <a href="https://ministerstwogwiazd.pl/" target="_blank">ministerstwogwiazd.pl</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>Personal Reactor</h3>
+<div class="tag-row"><span class="tag">Management talentów</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Agencja pomagająca nawiązać kontakt z rozpoznawalnymi twarzami telewizji i show-biznesu na potrzeby kampanii reklamowych i wizerunkowych.</p>
+
+<div class="contact-box">
+<div>🌐 <a href="https://personalreactor.pl/management-gwiazd/" target="_blank">personalreactor.pl</a></div>
+</div>
+<div class="src">Źródło: <a href="https://personalreactor.pl/management-gwiazd/" target="_blank">personalreactor.pl</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>L*Gwiazdy</h3>
+<div class="tag-row"><span class="tag">Agencja aktorska (od 1995)</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Jedna z najdłużej działających polskich agencji aktorskich (założona w 1995 r. przez Lucynę Kobierzycką), reprezentuje polskie gwiazdy filmowe i teatralne.</p>
+
+<div class="contact-box">
+<div>🌐 <a href="https://www.l-gwiazdy.pl/en/" target="_blank">l-gwiazdy.pl</a></div>
+</div>
+<div class="src">Źródło: <a href="https://www.l-gwiazdy.pl/en/" target="_blank">l-gwiazdy.pl</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>STARS Impresariat</h3>
+<div class="tag-row"><span class="tag">Casting / talenty reklamowe</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Duża agencja castingowa działająca od 20 lat, prowadzi bazę statystów i talentów reklamowych do filmów, seriali i reklam; powiązana agencja aktorska STELO obsługuje zlecenia dla aktorów. Studio castingowe w Warszawie.</p>
+<dl class="facts">
+<dt>Baza</dt><dd>Ponad 287 000 statystów, epizodystów i talentów reklamowych (deklaracja własna)</dd>
+</dl>
+<div class="contact-box">
+<div>🌐 <a href="https://stars-impresariat.pl/" target="_blank">stars-impresariat.pl</a></div>
+</div>
+<div class="src">Źródło: <a href="https://stars-impresariat.pl/" target="_blank">stars-impresariat.pl</a></div>
+</div></div>
+</div>
+</div>
+</section>
+<!-- MODELKI / HOSTESSY -->
+<section class="category" id="modelki-hostessy">
+<h2>👥 Agencje modelek, hostess i statystów</h2>
+<p class="cat-desc">Przydatne, gdy kampania potrzebuje twarzy do sesji zdjęciowej, hostessy na event lub statystów.</p>
+<div class="list">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left">
+<h3>Infernal</h3>
+<div class="tag-row"><span class="tag">Modelki / hostessy / statyści</span></div>
+</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Agencja działająca od 2011 r., prowadzi bazę modelek i modeli w różnym wieku, organizuje hostessy do działań reklamowych i eventowych oraz statystów.</p>
+
+<div class="contact-box">
+<div>🌐 <a href="https://www.agencjainfernal.pl/" target="_blank">agencjainfernal.pl</a></div>
+</div>
+<div class="src">Źródło: <a href="https://www.agencjainfernal.pl/" target="_blank">agencjainfernal.pl</a></div>
+</div></div>
+</div>
+</div>
+</section>
+<!-- JAK JESZCZE SZUKAĆ -->
+<section class="category" id="jak-szukac">
+<h2>🧭 Inne sposoby na dotarcie do influencerów i gwiazd</h2>
+<div class="list">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left"><h3>Katalogi branżowe agencji</h3></div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Serwisy <strong>influencer.pl</strong> i <strong>influmarketing.pl</strong> prowadzą aktualizowane listy agencji influencer marketingu w Polsce z opisem zakresu usług i danymi kontaktowymi.</p>
+<div class="src">Źródła: <a href="https://influencer.pl/agencje-influencer-marketing/strona-2" target="_blank">influencer.pl</a>, <a href="https://influmarketing.pl/" target="_blank">influmarketing.pl</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left"><h3>Bezpośredni kontakt z twórcą</h3></div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Wielu mniejszych i średnich influencerów podaje adres do współpracy biznesowej wprost w opisie profilu na Instagramie/TikToku/YouTube (etykieta „współpraca” / „biznes”). To najtańsza droga, ale bez wsparcia agencji przy negocjacjach i umowie.</p>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left"><h3>Wyszukiwarki i platformy międzynarodowe</h3></div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Serwisy takie jak <strong>Sortlist</strong> czy <strong>ensun.io</strong> zestawiają rankingi agencji influencer marketingu działających w Polsce (część z ocenami klientów).</p>
+<div class="src">Źródła: <a href="https://www.sortlist.com/s/influencer-marketing/poland-pl" target="_blank">sortlist.com</a>, <a href="https://ensun.io/search/influencer-marketing/poland" target="_blank">ensun.io</a></div>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left"><h3>6 dróg do kontaktu — krok po kroku</h3></div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc"><strong>1. Oficjalny management</strong> — najlepsza droga do gwiazd, dużych twórców i osób publicznych; management ustala dostępność, stawkę, prawa wizerunkowe i wyłączność.<br/><br/>
+<strong>2. Agencja influencer marketingu</strong> — dobra przy kampanii z wieloma twórcami naraz; agencja buduje shortlistę, negocjuje, podpisuje umowy, pilnuje publikacji i raportuje.<br/><br/>
+<strong>3. Publiczny e-mail w bio</strong> — sprawdź zakładkę „Informacje” na YouTube, bio Instagrama/TikToka, Linktree oraz stronę WWW; kontaktuj się wyłącznie na adres biznesowy.<br/><br/>
+<strong>4. Platforma marketplace</strong> — przydatna dla mikro- i średnich twórców, gdy liczy się szybkie porównanie ofert i standaryzacja procesu.<br/><br/>
+<strong>5. LinkedIn</strong> — szukaj stanowisk: Talent Manager, Influencer Manager, Creator Partnerships, Head of Influencer Marketing + nazwa twórcy/agencji.<br/><br/>
+<strong>6. Booking aktorski / muzyczny / sportowy</strong> — gwiazdy spoza internetu często mają osobny booking koncertowy, aktorski, eventowy i reklamowy; zawsze pytaj o właściwy zakres.</p>
+</div></div>
+</div>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left"><h3>📧 Wzór pierwszego zapytania ofertowego</h3></div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Gotowy szkielet e-maila do agencji/managementu — wystarczy uzupełnić nawiasy kwadratowe.</p>
+<div class="contact-box" style="font-family:'Inter',sans-serif; white-space:pre-wrap; line-height:1.7;">Dzień dobry,
+reprezentuję [firma/agencja]. Przygotowujemy kampanię dla marki [marka] dotyczącą [produkt/usługa].
+Interesuje nas współpraca z [twórca] w terminie [termin]. Zakres:
+• [format i liczba publikacji],
+• [platformy],
+• [udział w evencie / nagraniu],
+• prawa do wykorzystania: [organic / paid media / okres / terytorium],
+• wyłączność: [kategoria i okres].
+Grupa docelowa: [opis]. Cel kampanii: [zasięg/sprzedaż/event/wizerunek].
+Proszę o informację o dostępności, aktualny media kit, demografię odbiorców, średnie wyniki formatów, wycenę oraz warunki prawne.
+
+Pozdrawiam,
+[imię, firma, telefon]</div>
+<p class="desc" style="margin-top:10px;">Elementy, które warto zawsze podać w zapytaniu: marka/produkt/cel, termin i długość kampanii, platformy i formaty, grupa docelowa i rynek, budżet (lub prośba o warianty), zakres praw (organic/paid/whitelisting/POS/event/wizerunek), wyłączność kategorii i jej długość, liczba rund poprawek, obowiązkowe oznaczenia reklamowe, oczekiwane dane raportowe.</p>
+</div></div>
+</div>
+</div>
+</section>
+<!-- STAWKI I BUDŻET -->
+<section class="category" id="stawki-budzet">
+<h2>💰 Stawki, prowizje i budowanie budżetu</h2>
+<p class="cat-desc">Większość agencji i twórców nie publikuje cenników. Cena zależy nie tylko od liczby obserwujących, ale od średnich wyświetleń, demografii, jakości treści, terminu, produkcji, praw do wykorzystania, wyłączności i ryzyka kategorii.</p>
+<div class="rank-table-wrap">
+<table class="rank-table">
+<thead><tr><th>Pozycja budżetu</th><th>Co obejmuje</th></tr></thead>
+<tbody>
+<tr><td><strong>Honorarium twórcy</strong></td><td>Produkcja i publikacja uzgodnionego materiału</td></tr>
+<tr><td><strong>Fee agencji / managementu</strong></td><td>Koordynacja, negocjacje, umowy, raportowanie — zwykle wyceniane indywidualnie, nie zakładaj poziomu bez oferty</td></tr>
+<tr><td><strong>Produkcja</strong></td><td>Studio, operator, montaż, grafika, transport, nocleg, charakteryzacja, scenografia</td></tr>
+<tr><td><strong>Prawa do wykorzystania</strong></td><td>Reklamy płatne, whitelisting/Spark Ads, strona marki, ekrany eventowe, POS, TV/OOH</td></tr>
+<tr><td><strong>Wyłączność</strong></td><td>Zakaz współpracy z konkurencją przez wskazany czas i na wskazanym rynku</td></tr>
+<tr><td><strong>Paid media</strong></td><td>Budżet mediowy jest oddzielny od honorarium twórcy</td></tr>
+<tr><td><strong>Obsługa prawna i compliance</strong></td><td>Weryfikacja claimów, regulaminów, konkursów, oznaczeń reklamy i praw do muzyki</td></tr>
+<tr><td><strong>Raport i narzędzia</strong></td><td>Dostęp do danych, monitoringu, brand-safety i analizy autentyczności</td></tr>
+</tbody>
+</table>
+</div>
+<div class="rank-note" style="margin-top:16px;">
+<strong>Jawne informacje cenowe znalezione w źródłach:</strong> Reach a Blogger opublikował informację o 15% prowizji platformy (materiał z ok. 2020 r. — potwierdź aktualność przed zakupem). WhitePress podaje, że konto, wizytówka influencera i Strefa Ogłoszeń są bezpłatne, a koszty płatnych usług zależą od zamówienia. Modash publikuje cennik subskrypcji narzędzia — to nie jest cennik honorariów influencerów. W case study Rokmates dla marki Speakly podano średnie CPA na poziomie 3,91 zł — to wynik jednej konkretnej kampanii, a nie uniwersalna stawka rynkowa.
+    </div>
+<div class="item tile" style="margin-top:16px;">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left"><h3>📊 Minimalny zestaw danych do porównania ofert</h3></div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">Przy porównywaniu dwóch lub więcej ofert warto zebrać dla każdego twórcy: cenę netto całej współpracy, średni zasięg/wyświetlenia danego formatu, CPM lub koszt dotarcia, engagement rate, demografię odbiorców, udział odbiorców z Polski, prawa do paid media, wyłączność, termin, liczbę poprawek i formę raportu.</p>
+</div></div>
+</div>
+</section>
+<!-- BRAND SAFETY -->
+<section class="category" id="brand-safety">
+<h2>🛡️ Checklista brand safety i family friendly</h2>
+<p class="cat-desc">Zanim podpiszesz umowę z twórcą — niezależnie od tego, jak „bezpieczna” wydaje się kategoria — przejdź przez tę listę.</p>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left"><h3>✅ Lista kontrolna przed kampanią</h3></div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">
+        ☐ Przejrzyj minimum 30 ostatnich publikacji i materiały z ostatnich 6–12 miesięcy.<br/>
+        ☐ Sprawdź treści usunięte lub kryzysy opisane w wiarygodnych mediach.<br/>
+        ☐ Zweryfikuj język, używki, hazard, treści seksualne, przemoc i ryzykowne zachowania.<br/>
+        ☐ Sprawdź wcześniejsze współprace z konkurencją oraz ich daty.<br/>
+        ☐ Przeanalizuj sentyment komentarzy i udział komentarzy wyglądających na automatyczne.<br/>
+        ☐ Poproś o dane demograficzne z panelu: kraj, wiek, płeć, zasięg i średnie wyświetlenia.<br/>
+        ☐ Sprawdź skoki liczby obserwujących i wiarygodność odbiorców narzędziem analitycznym.<br/>
+        ☐ Ustal zasady używania wizerunku dzieci oraz zgody opiekunów.<br/>
+        ☐ Zapisz w umowie obowiązek akceptacji materiału, prawidłowych oznaczeń reklamy i procedurę kryzysową.<br/>
+        ☐ Nie oceniaj twórcy tylko po liczbie followersów — analizuj średnie wyświetlenia i jakość dopasowania.
+        </p>
+</div></div>
+</div>
+</section>
+<!-- PRAWO I STANDARDY -->
+<section class="category" id="prawo">
+<h2>⚖️ Prawo i standardy</h2>
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
+<div class="left"><h3>Oznaczanie reklamy i standard branżowy</h3></div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
+<div class="item-body"><div class="item-body-inner">
+<p class="desc">UOKiK wskazuje, że czytelne, jednoznaczne i zrozumiałe oznaczenie reklamy jest obowiązkiem influencera, agencji reklamowej i reklamodawcy. Urząd rekomenduje oznaczenie dwupoziomowe: funkcją platformy oraz we własnym zakresie, ze wskazaniem komercyjnego charakteru i promowanej marki.</p>
+<p class="desc">Od 15 kwietnia 2026 r. działa w Polsce Standard Jakości Profesjonalistów Influencer Marketingu przygotowany w ramach BRIM (przy IAB Polska). Przy wyborze partnera warto pytać, czy agencja lub osoba pracuje według tego standardu.</p>
+<p class="desc">Standardy raportowania kampanii rekomendują analizę dopasowania do DNA marki, historii publikacji, współprac z konkurencją, sentymentu komentarzy, demografii, wiarygodności obserwatorów oraz wyników organicznych i płatnych.</p>
+<div class="src">Źródła: <a href="https://uokik.gov.pl/influencer-marketing" target="_blank">UOKiK — influencer marketing</a>, <a href="https://www.iab.org.pl/aktualnosci/powstal-pierwszy-w-polsce-standard-jakosci-dla-influencer-marketingu/" target="_blank">IAB Polska — Standard Jakości 2026</a>, <a href="https://influencermarketing.org.pl/standardy-raportowania-kampanii-w-influencer-marketingu/" target="_blank">Standardy raportowania kampanii</a></div>
+</div></div>
+</div>
+</section>
+</main>
+<footer>
+
+  Katalog przygotowany na podstawie publicznie dostępnych źródeł internetowych (lipiec 2026). Dane kontaktowe, zasięgi i ceny mogą się zmieniać — przed podjęciem współpracy zweryfikuj je bezpośrednio na stronie danej agencji.
+</footer>
+<script>
+  function toggleItem(headEl){
+    var item = headEl.parentElement;
+    var wasOpen = item.classList.contains('open');
+    // close siblings within the same list for a cleaner accordion feel
+    var list = item.parentElement;
+    list.querySelectorAll('.item.open').forEach(function(el){
+      if(el !== item) el.classList.remove('open');
+    });
+    item.classList.toggle('open', !wasOpen);
+  }
+
+  function filterRanking(){
+    var q = document.getElementById('rankSearch').value.trim().toLowerCase();
+    var rows = document.querySelectorAll('#rankTable tbody tr');
+    rows.forEach(function(row){
+      var text = row.textContent.toLowerCase();
+      row.style.display = text.indexOf(q) !== -1 ? '' : 'none';
+    });
+  }
+
+  function toggleRanking(headEl){
+    var item = headEl.parentElement;
+    item.classList.toggle('open');
+  }
+
+  function showPlatform(platform, btn){
+    document.querySelectorAll('.platform-panel').forEach(function(p){ p.style.display = 'none'; });
+    document.getElementById('panel-' + platform).style.display = '';
+    document.querySelectorAll('.platform-tab').forEach(function(t){ t.classList.remove('active'); });
+    btn.classList.add('active');
+  }
+
+  function filterTable(inputId, tableId){
+    var q = document.getElementById(inputId).value.trim().toLowerCase();
+    var rows = document.querySelectorAll('#' + tableId + ' tbody tr');
+    rows.forEach(function(row){
+      var text = row.textContent.toLowerCase();
+      row.style.display = text.indexOf(q) !== -1 ? '' : 'none';
+    });
+  }
+
+  function filterCreators(){
+    var q = document.getElementById('creatorSearch').value.trim().toLowerCase();
+    var tiles = document.querySelectorAll('#creatorGrid .creator-tile');
+    tiles.forEach(function(tile){
+      var text = tile.textContent.toLowerCase();
+      tile.style.display = text.indexOf(q) !== -1 ? '' : 'none';
+    });
+  }
+
+  function openTile(item){
+    if(!item) return;
+    document.querySelectorAll('.item.tile.expanded').forEach(function(el){ el.classList.remove('expanded'); });
+    item.classList.add('expanded');
+    document.getElementById('tileBackdrop').classList.add('show');
+    document.body.classList.add('modal-open');
+  }
+
+  function closeTile(){
+    document.querySelectorAll('.item.tile.expanded').forEach(function(el){ el.classList.remove('expanded'); });
+    document.getElementById('tileBackdrop').classList.remove('show');
+    document.body.classList.remove('modal-open');
+  }
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeTile();
+  });
+</script>
+<div class="tile-backdrop" id="tileBackdrop" onclick="closeTile()"></div></body>
+</html>    padding:7px 16px;
+    border-radius:100px;
+    font-size:0.8rem;
+    font-weight:600;
+    color:var(--text);
+    box-shadow:0 2px 8px rgba(221,42,123,0.08);
+  }
+
+  nav.toc{
+    max-width:1000px;
+    margin:26px auto 0;
+    padding:0 24px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  nav.toc a{
+    color:var(--text);
+    text-decoration:none;
+    background:var(--panel);
+    border:2px solid var(--border);
+    padding:8px 18px;
+    border-radius:100px;
+    font-size:0.85rem;
+    font-weight:700;
+    transition:0.18s;
+  }
+  nav.toc a:hover{
+    border-color:transparent;
+    background:var(--grad);
+    color:#fff;
+    transform:translateY(-2px);
+  }
+
+  main{
+    max-width:900px;
+    margin:0 auto;
+    padding:36px 20px 90px;
+  }
+
+  .disclaimer{
+    background:var(--warn-bg);
+    border:2px solid #FFE199;
+    border-radius:18px;
+    padding:16px 20px;
+    margin-bottom:36px;
+    font-size:0.9rem;
+    color:#6b5a1f;
+  }
+  .disclaimer strong{color:#a3781a;}
+
+  section.category{
+    margin-bottom:46px;
+  }
+  section.category > h2{
+    font-size:1.35rem;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding-bottom:0;
+    margin-bottom:6px;
+    color:var(--text);
+  }
+  section.category > .cat-desc{
+    color:var(--muted);
+    font-size:0.9rem;
+    font-weight:500;
+    margin-bottom:18px;
+  }
+
+  .list{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+    gap:16px;
+    align-items:start;
+  }
+
+  .item{
+    background:var(--panel);
+    border:2px solid var(--border);
+    border-radius:var(--radius);
+    overflow:hidden;
+    transition:border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+    box-shadow:0 2px 10px rgba(129,52,175,0.05);
+  }
+  .item.tile{
+    display:flex;
+    flex-direction:column;
+    height:100%;
+    cursor:pointer;
+  }
+  .item.tile:hover{
+    transform:translateY(-4px);
+    box-shadow:0 10px 26px rgba(221,42,123,0.18);
+    border-color:transparent;
+    background:
+      linear-gradient(var(--panel), var(--panel)) padding-box,
+      var(--grad) border-box;
+  }
+  .item.open{
+    border-color:transparent;
+    box-shadow:0 8px 24px rgba(221,42,123,0.18);
+  }
+  .item.open{
+    background:
+      linear-gradient(var(--panel), var(--panel)) padding-box,
+      var(--grad) border-box;
+  }
+
+  .item-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:17px 20px;
+    user-select:none;
+  }
+  #rankAccordion > .item-head, #creatorsAccordion > .item-head{cursor:pointer;}
+  #rankAccordion > .item-head:hover, #creatorsAccordion > .item-head:hover{background:var(--panel2);}
+
+  .item-head .left{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .item-head h3{
+    margin:0;
+    font-size:1.08rem;
+    font-weight:700;
+  }
+  .item-head .tag-row{display:flex; gap:6px; flex-wrap:wrap;}
+  .tag{
+    font-size:0.72rem;
+    font-weight:700;
+    padding:4px 12px;
+    border-radius:100px;
+    background:var(--panel2);
+    border:1px solid var(--border);
+    color:var(--purple);
+    white-space:nowrap;
+  }
+  .tag.ff-yes{color:var(--good); background:var(--good-bg); border-color:#B7F0D2;}
+
+  .chevron{
+    flex-shrink:0;
+    width:22px; height:22px;
+    color:var(--accent);
+    transition:transform 0.2s;
+  }
+  .item.open .chevron{transform:rotate(180deg);}
+
+  /* small tile by default: body hidden, click -> grows into a big card overlay */
+  .item.tile .item-body{
+    max-height:0;
+    overflow:hidden;
+    flex:none;
+  }
+  .item-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.25s ease;
+  }
+  .item.open .item-body{max-height:1400px;}
   #rankAccordion.item.open .item-body, #creatorsAccordion.item.open .item-body{max-height:8000px;}
 
   .tile-close{
