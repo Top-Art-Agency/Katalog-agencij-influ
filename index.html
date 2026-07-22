@@ -145,9 +145,10 @@
   }
 
   .list{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
+    gap:16px;
+    align-items:start;
   }
 
   .item{
@@ -157,6 +158,20 @@
     overflow:hidden;
     transition:border-color 0.18s, box-shadow 0.18s, transform 0.18s;
     box-shadow:0 2px 10px rgba(129,52,175,0.05);
+  }
+  .item.tile{
+    display:flex;
+    flex-direction:column;
+    height:100%;
+    cursor:pointer;
+  }
+  .item.tile:hover{
+    transform:translateY(-4px);
+    box-shadow:0 10px 26px rgba(221,42,123,0.18);
+    border-color:transparent;
+    background:
+      linear-gradient(var(--panel), var(--panel)) padding-box,
+      var(--grad) border-box;
   }
   .item.open{
     border-color:transparent;
@@ -174,10 +189,10 @@
     justify-content:space-between;
     gap:12px;
     padding:17px 20px;
-    cursor:pointer;
     user-select:none;
   }
-  .item-head:hover{background:var(--panel2);}
+  #rankAccordion > .item-head, #creatorsAccordion > .item-head{cursor:pointer;}
+  #rankAccordion > .item-head:hover, #creatorsAccordion > .item-head:hover{background:var(--panel2);}
 
   .item-head .left{
     display:flex;
@@ -211,6 +226,12 @@
   }
   .item.open .chevron{transform:rotate(180deg);}
 
+  /* small tile by default: body hidden, click -> grows into a big card overlay */
+  .item.tile .item-body{
+    max-height:0;
+    overflow:hidden;
+    flex:none;
+  }
   .item-body{
     max-height:0;
     overflow:hidden;
@@ -218,6 +239,55 @@
   }
   .item.open .item-body{max-height:1400px;}
   #rankAccordion.item.open .item-body, #creatorsAccordion.item.open .item-body{max-height:8000px;}
+
+  .tile-close{
+    display:none;
+    flex-shrink:0;
+    width:28px; height:28px;
+    border-radius:50%;
+    align-items:center;
+    justify-content:center;
+    background:var(--panel2);
+    color:var(--muted);
+    font-size:0.85rem;
+    font-weight:700;
+  }
+  .tile-close:hover{background:var(--grad); color:#fff;}
+
+  .item.tile.expanded{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:min(560px, 92vw);
+    max-height:85vh;
+    z-index:1001;
+    box-shadow:0 24px 60px rgba(43,27,51,0.35);
+    cursor:default;
+    border-color:transparent;
+    background:
+      linear-gradient(var(--panel), var(--panel)) padding-box,
+      var(--grad) border-box;
+    overflow-y:auto;
+  }
+  .item.tile.expanded:hover{transform:translate(-50%,-50%);}
+  .item.tile.expanded .item-body{
+    max-height:none;
+    overflow:visible;
+  }
+  .item.tile.expanded .tile-close{display:flex;}
+  .item.tile.expanded .item-head{position:sticky; top:0; background:var(--panel); z-index:2;}
+
+  .tile-backdrop{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(43,27,51,0.55);
+    backdrop-filter:blur(2px);
+    z-index:1000;
+  }
+  .tile-backdrop.show{display:block;}
+  body.modal-open{overflow:hidden;}
 
   .item-body-inner{
     padding:0 20px 22px;
@@ -373,6 +443,75 @@
       margin-bottom:1px;
     }
     table.rank-table td:empty{display:none;}
+  }
+
+  /* CREATOR TILES */
+  .creator-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));
+    gap:14px;
+  }
+  .creator-tile{
+    background:var(--panel);
+    border:2px solid var(--border);
+    border-radius:18px;
+    padding:16px;
+    box-shadow:0 2px 10px rgba(129,52,175,0.05);
+    transition:transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  }
+  .creator-tile:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px rgba(221,42,123,0.15);
+    border-color:transparent;
+    background:
+      linear-gradient(var(--panel), var(--panel)) padding-box,
+      var(--grad) border-box;
+  }
+  .creator-tile .ct-name{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:1.02rem;
+    color:var(--text);
+    margin-bottom:2px;
+  }
+  .creator-tile .ct-cat{
+    font-size:0.74rem;
+    font-weight:700;
+    color:var(--purple);
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+    margin-bottom:10px;
+  }
+  .creator-tile .ct-reach{
+    font-size:0.82rem;
+    font-weight:700;
+    color:var(--good);
+    margin-bottom:8px;
+    line-height:1.4;
+  }
+  .creator-tile .ct-reach.no-data{
+    font-weight:500;
+    font-style:italic;
+    color:#b0a0b8;
+    font-size:0.78rem;
+  }
+  .creator-tile .ct-mgmt{
+    font-size:0.78rem;
+    color:var(--muted);
+    margin-bottom:12px;
+  }
+  .creator-tile .ct-badge{
+    display:inline-block;
+    padding:5px 12px;
+    border-radius:100px;
+    font-size:0.72rem;
+    font-weight:700;
+  }
+  .badge-green{background:var(--good-bg); color:var(--good);}
+  .badge-yellow{background:#FFF6DD; color:#a3781a;}
+  .badge-red{background:#FFE4E4; color:#c0392b;}
+  @media (max-width:480px){
+    .creator-grid{grid-template-columns:repeat(auto-fill, minmax(160px, 1fr));}
   }
 </style></head>
 <body>
@@ -543,14 +682,13 @@
 <h2>🏢 Agencje influencer marketingu (full-service)</h2>
 <p class="cat-desc">Reprezentują sieć twórców, planują strategię, negocjują stawki i rozliczają współpracę w imieniu marki.</p>
 <div class="list">
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>GetHero</h3>
 <div class="tag-row"><span class="tag">Wrocław</span><span class="tag ff-yes">ma content family friendly</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Agencja z Wrocławia działająca ponad 10 lat, reprezentuje twórców z YouTube, Instagrama i TikToka; zespół 60+ specjalistów digital marketingu. Ma projekt „Baza” opisywany jako content family friendly oraz „Szpont” dla starszej młodzieży (pokolenie Z).</p>
 <dl class="facts">
@@ -568,14 +706,13 @@
 <div class="src">Źródła: <a href="https://gethero.pl/" target="_blank">gethero.pl</a>, <a href="https://www.influmarketing.pl/agencje-influencer-marketing/gethero/" target="_blank">influmarketing.pl</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>Lifetube (Grupa Lifetube)</h3>
 <div class="tag-row"><span class="tag">Sieć YouTube / MCN</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Największa lokalna sieć YouTube w Europie Środkowo-Wschodniej i jedna z największych agencji influencer marketingu w Polsce. Skupia twórców YouTube (lifestyle, gaming po fuzji z grupą LTTM/Gameset, rozrywka).</p>
 <dl class="facts">
@@ -592,14 +729,13 @@
 <div class="src">Źródła: <a href="https://pl.wikipedia.org/wiki/LifeTube" target="_blank">Wikipedia — LifeTube</a>, <a href="https://media.lifetube.pl/" target="_blank">media.lifetube.pl</a>, <a href="https://www.lifetube.pl/en/knowledge-base/summary-of-the-year-2022" target="_blank">lifetube.pl (podsumowanie 2022)</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>Friends&amp;Brands</h3>
 <div class="tag-row"><span class="tag">Agencja + platforma</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Agencja od 2015 r., łączy funkcję agencji strategicznej i platformy self-service z bazą twórców — nano (1 000–5 000 obserwujących), mikro i twórców content marketingowych. Realizuje też kampanie 360°.</p>
 <dl class="facts">
@@ -616,14 +752,13 @@
 <div class="src">Źródła: <a href="https://friendsandbrands.pl/" target="_blank">friendsandbrands.pl</a>, <a href="https://influencerzy.friendsandbrands.pl/" target="_blank">influencerzy.friendsandbrands.pl</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>Spotlight Agency</h3>
 <div class="tag-row"><span class="tag">Management twórców i artystów</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Agencja powstała w lutym 2019 r., współtworzona m.in. przez influencera Stuarta Burtona (Stuu), Veronicę Bielik i Wojciecha Szaniawskiego (Arskom, SportBrokers). Reprezentuje twórców internetowych i artystów muzycznych.</p>
 <dl class="facts">
@@ -639,14 +774,13 @@
 <div class="src">Źródła: <a href="https://www.proto.pl/aktualnosci/spotlight-agency-nowa-agencja-influencer-marketingu-na-polskim-rynku/" target="_blank">PRoto.pl</a>, <a href="https://pl.linkedin.com/company/spotlight-a" target="_blank">LinkedIn</a>, <a href="https://www.instagram.com/agencyspotlight/" target="_blank">Instagram @agencyspotlight</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>Influency</h3>
 <div class="tag-row"><span class="tag">Pierwsza agencja influencerska w PL</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Opisywana jako pierwsza w Polsce agencja influencerska skupiona na rozumieniu potrzeb marek i influencerów. Uwaga: agencja publicznie ostrzegała przed osobą podszywającą się pod jej przedstawiciela — warto weryfikować kontakt przez oficjalną stronę.</p>
 <dl class="facts">
@@ -663,14 +797,13 @@
 <div class="src">Źródła: <a href="https://influency.pl/" target="_blank">influency.pl</a>, <a href="https://influmarketing.pl/agencje-influencer-marketing/influency/" target="_blank">influmarketing.pl</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>Influently</h3>
 <div class="tag-row"><span class="tag">Agencja + management</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Agencja influencer marketingu oferująca zarówno zlecanie kampanii, jak i management twórców.</p>
 <dl class="facts">
@@ -687,14 +820,13 @@
 <div class="src">Źródło: <a href="https://influently.pl/kontakt/" target="_blank">influently.pl/kontakt</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>Influ-News</h3>
 <div class="tag-row"><span class="tag">Agencja / medium branżowe</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Podmiot z branży influencer marketingu (portal + kontakt biznesowy); warto zweryfikować aktualny zakres usług bezpośrednio przy kontakcie.</p>
 <dl class="facts">
@@ -711,14 +843,13 @@
 <div class="src">Źródło: <a href="https://influ-news.pl/contact/" target="_blank">influ-news.pl/contact</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>Brandegic</h3>
 <div class="tag-row"><span class="tag">Influence Business Sp. z o.o.</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Podmiot działający pod firmą Influence Business Sp. z o.o., zarejestrowany w Zielonej Górze.</p>
 <dl class="facts">
@@ -742,14 +873,13 @@
 <h2>🎬 Kolektywy twórców i holdingi twórcze</h2>
 <p class="cat-desc">To nie klasyczne agencje pośredniczące — to własne marki/kolektywy twórców, z którymi kampanię umawia się bezpośrednio (często przez spółkę zarządzającą marką).</p>
 <div class="list">
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>Ekipa (Ekipa Friza)</h3>
 <div class="tag-row"><span class="tag">Kolektyw YouTube/TikTok</span><span class="tag">Spółka giełdowa</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Polski kolektyw twórców internetowych założony w 2018 r. przez Karola „Friza” Wiśniewskiego i Łukasza „Wujka Łukiego” Wojtycę. Działalność biznesowa (merch, napoje, kampanie reklamowe) prowadzona jest przez notowaną na giełdzie spółkę Ekipa Holding S.A. z siedzibą w Krakowie. Zrealizowali m.in. głośną kampanię „Lody Ekipy” dla marki Koral oraz współprace z Energylandią i marką Donuty.</p>
 <dl class="facts">
@@ -766,14 +896,13 @@
 <div class="src">Źródła: <a href="https://pl.wikipedia.org/wiki/Ekipa_Friza" target="_blank">Wikipedia — Ekipa Friza</a>, <a href="https://kontaktinfolinia.pl/ekipa-friza" target="_blank">kontaktinfolinia.pl</a>, <a href="https://hesna.pl/blog/lody-ekipy-czyli-skuteczna-moc-influencer-marketingu/" target="_blank">hesna.pl (kampania Koral)</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>StormMedia</h3>
 <div class="tag-row"><span class="tag">400+ twórców na wyłączność</span><span class="tag">IG/YT/TikTok/Twitch/X</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Jedna z czołowych agencji influencer marketingu w Polsce i Europie, specjalizująca się w kompleksowej obsłudze kampanii z udziałem twórców internetowych na Instagramie, YouTubie, TikToku, Twitchu i X. We wrześniu 2025 r. agencja przeszła rebranding (nowa identyfikacja wizualna, rozszerzona oferta o eventy z twórcami), a w listopadzie 2025 r. nawiązała strategiczne partnerstwo z Influo Group — liderem rynku TikTok Live w Polsce — zyskując dostęp do ponad 1500 aktywnych twórców TikTok Live.</p>
 <dl class="facts">
@@ -792,14 +921,13 @@
 <div class="src">Źródła: <a href="https://stormmedia.gg/en/contact" target="_blank">stormmedia.gg/en/contact</a>, <a href="https://nowymarketing.pl/stormmedia-nowe-rozdanie-w-influencer-marketingu/" target="_blank">NowyMarketing.pl</a>, <a href="https://thepartners.com.pl/nowa-era-influencer-marketingu-strategiczne-partnerstwo-influo-group-i-stormmedia/" target="_blank">ThePartners.com.pl</a>, <a href="https://pl.linkedin.com/company/stormmediagg" target="_blank">LinkedIn StormMedia</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>InfluPartner</h3>
 <div class="tag-row"><span class="tag">Beauty / comedy / culinary / parenting</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Management i kampanie, w tym PR boxes, eventy i wyjazdy z twórcami. Roster obejmuje twórców z kategorii beauty, comedy, kulinarnej, parentingowej i lifestylowej.</p>
 <dl class="facts">
@@ -816,14 +944,13 @@
 <div class="src">Źródło: <a href="https://influpartner.pl/" target="_blank">influpartner.pl</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>Rokmates</h3>
 <div class="tag-row"><span class="tag">TikTok / YouTube / IG / Twitch</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Kompleksowe kampanie, management, płatne działania na TikToku i eventy z twórcami — obejmuje praktycznie wszystkie segmenty i platformy.</p>
 <dl class="facts">
@@ -840,14 +967,13 @@
 <div class="src">Źródła: <a href="https://rokmates.com/" target="_blank">rokmates.com</a>, <a href="https://rokmates.com/zespol/speakly-dlugoterminowe-dzialania-performance-natiktoku/" target="_blank">case study Speakly</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>DDOB (agencja)</h3>
 <div class="tag-row"><span class="tag">TikTok / młode grupy</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Strategie i długofalowe kampanie end-to-end: content, UGC, podcasty i eventy. Ta sama marka co ranking Top 100 wyżej w katalogu — DDOB prowadzi zarówno agencję, jak i publiczny ranking Instagramerów.</p>
 <dl class="facts">
@@ -862,14 +988,13 @@
 <div class="src">Źródło: <a href="https://www.ddob.pl/" target="_blank">ddob.pl</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>Gameset</h3>
 <div class="tag-row"><span class="tag">Gaming / esport / Twitch</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Agencja specjalizująca się w gamingu, esporcie i nowych technologiach — dobry wybór, gdy kampania celuje w społeczność Twitcha/YouTube gaming.</p>
 <dl class="facts">
@@ -884,14 +1009,13 @@
 <div class="src">Źródło: <a href="https://gameset.pl/" target="_blank">gameset.pl</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>DmG</h3>
 <div class="tag-row"><span class="tag">TikTok 360</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Niezależna agencja influencer marketingu skupiona na kampaniach TikTok 360 oraz Instagram i YouTube.</p>
 <dl class="facts">
@@ -906,14 +1030,13 @@
 <div class="src">Źródło: <a href="https://dmg.pl/" target="_blank">dmg.pl</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>M4 Agency</h3>
 <div class="tag-row"><span class="tag">Topowi influencerzy</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Influencer marketing i pełny management twórców, z naciskiem na topowych influencerów i pełne kampanie digital.</p>
 <dl class="facts">
@@ -929,14 +1052,13 @@
 <div class="src">Źródło: <a href="https://www.m4agency.pl/" target="_blank">m4agency.pl</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>WE!RE Fantasy</h3>
 <div class="tag-row"><span class="tag">YouTube / monetyzacja</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Management i wsparcie strategiczne z naciskiem na zaplecze YouTube i monetyzację kanałów, plus szeroki rynek twórców.</p>
 <dl class="facts">
@@ -951,14 +1073,13 @@
 <div class="src">Źródło: <a href="https://werefantasy.com/" target="_blank">werefantasy.com</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>Collab Management</h3>
 <div class="tag-row"><span class="tag">Beauty / fashion</span><span class="tag">Butikowa, na wyłączność</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Butikowy management twórców działający na zasadzie współpracy na wyłączność, skoncentrowany na kategoriach beauty i fashion.</p>
 <dl class="facts">
@@ -973,14 +1094,13 @@
 <div class="src">Źródło: <a href="https://mapa.iab.org.pl/collab-management/" target="_blank">mapa.iab.org.pl</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>Lemon Media</h3>
 <div class="tag-row"><span class="tag">Kampanie PL/DE</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Kampanie influencer marketingowe realizowane transgranicznie — w Polsce i w Niemczech.</p>
 <dl class="facts">
@@ -996,14 +1116,13 @@
 <div class="src">Źródło: <a href="https://lemonmedia.pl/influencer-marketing/" target="_blank">lemonmedia.pl</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>Płodni.com</h3>
 <div class="tag-row"><span class="tag">Parenting / eventy / lifestyle</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Agencja marketingowa i PR realizująca też działania z influencerami, m.in. w kategorii parenting, eventy i lifestyle.</p>
 <dl class="facts">
@@ -1026,14 +1145,13 @@
 <h2>🛒 Platformy / giełdy influencerów (jawne ceny)</h2>
 <p class="cat-desc">Marka sama przegląda oferty tysięcy twórców i widzi realne ceny publikacji.</p>
 <div class="list">
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>Reach a Blogger</h3>
 <div class="tag-row"><span class="tag">Marketplace</span><span class="tag">Jawny cennik</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Jedna z najbardziej rozpoznawalnych w Polsce platform łączących marki/agencje z blogerami, influencerami i youtuberami. Cała komunikacja, oferty, umowy i rozliczenia (w tym PIT-y) odbywają się przez platformę.</p>
 <dl class="facts">
@@ -1049,14 +1167,13 @@
 <div class="src">Źródła: <a href="https://reachablogger.pl/faq/" target="_blank">reachablogger.pl/faq</a>, <a href="https://reachablogger.pl/blog/platforma-reach-a-blogger-pobiera-15-prowizji-najnizsza-prowizja-rynku-zawsze-transparentna/" target="_blank">reachablogger.pl — artykuł o prowizji 15%</a>, <a href="https://www.smartage.pl/reach-a-blogger-platforma-wspolpracy-z-influencerami/" target="_blank">SmartAge.pl</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>WhitePress</h3>
 <div class="tag-row"><span class="tag">Marketplace</span><span class="tag">Konto darmowe</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Wyszukiwarka influencerów z wizytówkami twórców, strefą ogłoszeń i systemem rozliczeń — szerzej znana z publikacji sponsorowanych/SEO, ale obejmuje też influencer marketing.</p>
 <dl class="facts">
@@ -1070,14 +1187,13 @@
 <div class="src">Źródło: <a href="https://www.whitepress.com/pl/faq" target="_blank">whitepress.com/pl/faq</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>indaHash</h3>
 <div class="tag-row"><span class="tag">Globalna platforma + agencja</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Globalna platforma i agencja end-to-end realizująca kampanie influencer marketingowe w oparciu o dane — obecna też na rynku polskim.</p>
 <dl class="facts">
@@ -1091,14 +1207,13 @@
 <div class="src">Źródło: <a href="https://indahash.com/" target="_blank">indahash.com</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>Modash</h3>
 <div class="tag-row"><span class="tag">Narzędzie discovery/analityka</span><span class="tag">Jawny cennik</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Narzędzie (nie agencja) do wyszukiwania twórców, analizy odbiorców i autentyczności obserwujących oraz monitoringu kampanii — dobre uzupełnienie audytu brand-safety przed podpisaniem umowy.</p>
 <dl class="facts">
@@ -1112,14 +1227,13 @@
 <div class="src">Źródło: <a href="https://www.modash.io/pl/cennik" target="_blank">modash.io/pl/cennik</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>Mikroinfluencerzy.pl</h3>
 <div class="tag-row"><span class="tag">Self-service, mikroinfluencerzy</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Platforma self-service do wyszukiwania mikroinfluencerów i samodzielnego uruchamiania kampanii — dobra dla mniejszych budżetów i testowania wielu twórców naraz.</p>
 <dl class="facts">
@@ -1152,58 +1266,7 @@
 </div>
 <div class="item-body"><div class="item-body-inner">
 <input class="rank-search" id="creatorSearch" onkeyup="filterCreators()" placeholder="🔍 Szukaj po nazwisku, pseudonimie lub kategorii…" type="text"/>
-<div class="rank-table-wrap">
-<table class="rank-table" id="creatorTable">
-<thead>
-<tr>
-<th>Twórca</th>
-<th>Kategoria</th>
-<th>Zasięgi (publiczne)</th>
-<th>Management</th>
-<th>Ocena</th>
-</tr>
-</thead>
-<tbody>
-<tr><td data-label="Twórca"><strong>Isamu</strong></td><td data-label="Kategoria">Entertainment</td><td class="rank-followers" data-label="Zasięgi (publiczne)">YT 2 830 000 · IG 1 200 306 · TT 695 132</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🟡 Wymaga audytu</td></tr>
-<tr><td data-label="Twórca"><strong>Admiros</strong></td><td data-label="Kategoria">Gaming</td><td class="rank-followers" data-label="Zasięgi (publiczne)">YT 2 420 000 · IG 90 521 · TT 466 492</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🟡 Wymaga audytu</td></tr>
-<tr><td data-label="Twórca"><strong>Karolek</strong></td><td data-label="Kategoria">Entertainment</td><td class="rank-followers" data-label="Zasięgi (publiczne)">YT 2 300 000 · IG 555 490</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🟡 Wymaga audytu</td></tr>
-<tr><td data-label="Twórca"><strong>Millo</strong></td><td data-label="Kategoria">Lifestyle</td><td class="rank-followers" data-label="Zasięgi (publiczne)">YT 1 890 000 · IG 160 734 · TT 355 931</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🟡 Wymaga audytu</td></tr>
-<tr><td data-label="Twórca"><strong>Yoshi</strong></td><td data-label="Kategoria">Lifestyle</td><td class="rank-followers" data-label="Zasięgi (publiczne)">YT 1 740 000 · IG 521 643 · TT 423 810</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🟡 Wymaga audytu</td></tr>
-<tr><td data-label="Twórca"><strong>Zebo</strong></td><td data-label="Kategoria">Commentary</td><td class="rank-followers" data-label="Zasięgi (publiczne)">YT 1 690 000</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🔴 Podwyższone ryzyko</td></tr>
-<tr><td data-label="Twórca"><strong>Niekryty Krytyk</strong></td><td data-label="Kategoria">Commentary</td><td class="rank-followers" data-label="Zasięgi (publiczne)">YT 1 610 000 · IG 43 567 · TT 269</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🔴 Podwyższone ryzyko</td></tr>
-<tr><td data-label="Twórca"><strong>Lakarnum</strong></td><td data-label="Kategoria">Commentary</td><td class="rank-followers" data-label="Zasięgi (publiczne)">YT 1 500 000 · IG 254 689 · TT 351 162</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🔴 Podwyższone ryzyko</td></tr>
-<tr><td data-label="Twórca"><strong>TOP10wszystkiego</strong></td><td data-label="Kategoria">Entertainment / rankingi</td><td class="rank-followers" data-label="Zasięgi (publiczne)">YT 1 400 000</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🟡 Wymaga audytu</td></tr>
-<tr><td data-label="Twórca"><strong>GilathissNew</strong></td><td data-label="Kategoria">Gaming</td><td class="rank-followers" data-label="Zasięgi (publiczne)">YT 1 320 000 · IG 101 449</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🟡 Wymaga audytu</td></tr>
-<tr><td data-label="Twórca"><strong>Agnes Ratajczak</strong></td><td data-label="Kategoria">Comedy</td><td class="rank-followers" data-label="Zasięgi (publiczne)">TikTok/IG/YouTube @agnesratajczak(offcial)</td><td data-label="Management">InfluPartner</td><td data-label="Ocena">🟡 Wymaga audytu</td></tr>
-<tr><td data-label="Twórca"><strong>Eliza Wolnik (Makeupelza)</strong></td><td data-label="Kategoria">Beauty</td><td class="rank-followers" data-label="Zasięgi (publiczne)">TikTok/IG @makeupelza</td><td data-label="Management">InfluPartner</td><td data-label="Ocena">🟢 Prawdopodobnie odpowiedni</td></tr>
-<tr><td data-label="Twórca"><strong>Kamila Cieśla (Soo Good Food)</strong></td><td data-label="Kategoria">Culinary</td><td class="rank-followers" data-label="Zasięgi (publiczne)">TikTok/IG @soo.good.food · YT @soogoodfood</td><td data-label="Management">InfluPartner</td><td data-label="Ocena">🟢 Prawdopodobnie odpowiedni</td></tr>
-<tr><td data-label="Twórca"><strong>A&amp;K Zieliniaki</strong></td><td data-label="Kategoria">Parenting</td><td class="rank-followers" data-label="Zasięgi (publiczne)">TikTok @zieliniaki · IG @zieliniaki.official</td><td data-label="Management">InfluPartner</td><td data-label="Ocena">🟢 Prawdopodobnie odpowiedni*</td></tr>
-<tr><td data-label="Twórca"><strong>Noemi Majchrzak</strong></td><td data-label="Kategoria">Lifestyle</td><td class="rank-followers" data-label="Zasięgi (publiczne)">TikTok @noemimajchrzak1 · IG @noemimajchrzak</td><td data-label="Management">InfluPartner</td><td data-label="Ocena">🟡 Wymaga audytu</td></tr>
-<tr><td data-label="Twórca"><strong>AdBuster</strong></td><td data-label="Kategoria">Testy / consumer / tech</td><td class="no-data" data-label="Zasięgi (publiczne)">roster StormMedia — zasięgi z media kitu</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🟡 Wymaga audytu</td></tr>
-<tr><td data-label="Twórca"><strong>Detailer</strong></td><td data-label="Kategoria">Motoryzacja / detailing</td><td class="no-data" data-label="Zasięgi (publiczne)">roster StormMedia — zasięgi z media kitu</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🟢 Prawdopodobnie odpowiedni</td></tr>
-<tr><td data-label="Twórca"><strong>Dla Pieniędzy</strong></td><td data-label="Kategoria">Finanse / biznes</td><td class="no-data" data-label="Zasięgi (publiczne)">roster StormMedia — zasięgi z media kitu</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🟡 Wymaga audytu**</td></tr>
-<tr><td data-label="Twórca"><strong>KamilEater</strong></td><td data-label="Kategoria">Food</td><td class="no-data" data-label="Zasięgi (publiczne)">roster StormMedia — zasięgi z media kitu</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🟢 Prawdopodobnie odpowiedni</td></tr>
-<tr><td data-label="Twórca"><strong>Snax</strong></td><td data-label="Kategoria">Gaming / esport</td><td class="no-data" data-label="Zasięgi (publiczne)">roster StormMedia — zasięgi z media kitu</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🟡 Wymaga audytu</td></tr>
-<tr><td data-label="Twórca"><strong>Tivolt</strong></td><td data-label="Kategoria">Gaming</td><td class="no-data" data-label="Zasięgi (publiczne)">roster StormMedia — zasięgi z media kitu</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🟡 Wymaga audytu</td></tr>
-<tr><td data-label="Twórca"><strong>Ziemniak</strong></td><td data-label="Kategoria">Tech / gaming / commentary</td><td class="no-data" data-label="Zasięgi (publiczne)">roster StormMedia — zasięgi z media kitu</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🟡 Wymaga audytu</td></tr>
-<tr><td data-label="Twórca"><strong>Żądny Przygód</strong></td><td data-label="Kategoria">Travel / adventure</td><td class="no-data" data-label="Zasięgi (publiczne)">roster StormMedia — zasięgi z media kitu</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🟢 Prawdopodobnie odpowiedni</td></tr>
-<tr><td data-label="Twórca"><strong>Brokies</strong></td><td data-label="Kategoria">Lifestyle / entertainment</td><td class="rank-followers" data-label="Zasięgi (publiczne)">IG 277 398 · YT 162 000</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🟡 Wymaga audytu</td></tr>
-<tr><td data-label="Twórca"><strong>Palion</strong></td><td data-label="Kategoria">Gaming / młodzi odbiorcy</td><td class="no-data" data-label="Zasięgi (publiczne)">wymieniony w case study Rokmates — zasięgi do zapytania</td><td data-label="Management">Rokmates</td><td data-label="Ocena">🟡 Wymaga audytu***</td></tr>
-<tr><td data-label="Twórca"><strong>Klaudia Halejcio</strong></td><td data-label="Kategoria">Celebrity / lifestyle</td><td class="rank-followers" data-label="Zasięgi (publiczne)">IG ok. 1,17 mln (patrz Top 100 wyżej)</td><td data-label="Management">zależnie od kampanii, m.in. Rokmates</td><td data-label="Ocena">🟡 Wymaga audytu</td></tr>
-<tr><td data-label="Twórca"><strong>Cezary Pazura</strong></td><td data-label="Kategoria">Aktor / celebrity</td><td class="no-data" data-label="Zasięgi (publiczne)">wymieniony w case study Rokmates — zasięgi do managera</td><td data-label="Management">zależnie od kampanii, m.in. Rokmates</td><td data-label="Ocena">🟢 Prawdopodobnie odpowiedni</td></tr>
-<tr><td data-label="Twórca"><strong>Wujek Paolo</strong></td><td data-label="Kategoria">Lifestyle / kulinarne (pizza)</td><td class="rank-followers" data-label="Zasięgi (publiczne)">IG 66 954 · YT 312 000 · TT 341 465</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🟢 Prawdopodobnie odpowiedni</td></tr>
-<tr><td data-label="Twórca"><strong>SzopDemaskuje</strong></td><td data-label="Kategoria">Commentary</td><td class="rank-followers" data-label="Zasięgi (publiczne)">YT 161 000</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🔴 Podwyższone ryzyko</td></tr>
-<tr><td data-label="Twórca"><strong>Poskładanny</strong></td><td data-label="Kategoria">Entertainment (LEGO, family friendly)</td><td class="rank-followers" data-label="Zasięgi (publiczne)">IG 12 387 · YT 458 000</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🟢 Prawdopodobnie odpowiedni</td></tr>
-<tr><td data-label="Twórca"><strong>Testree</strong></td><td data-label="Kategoria">Gaming / esport</td><td class="rank-followers" data-label="Zasięgi (publiczne)">IG 22 032 · Twitch 125 955</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🟡 Wymaga audytu</td></tr>
-<tr><td data-label="Twórca"><strong>Andrew Gazda</strong></td><td data-label="Kategoria">Entertainment / fitness</td><td class="rank-followers" data-label="Zasięgi (publiczne)">IG 191 326 · TT 786 557 · Twitch 7 700</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🟡 Wymaga audytu</td></tr>
-<tr><td data-label="Twórca"><strong>Bowi (Bożena Cisło)</strong></td><td data-label="Kategoria">Automotive</td><td class="rank-followers" data-label="Zasięgi (publiczne)">IG 303 371 · YT 157 000 · TT 134 990</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🟢 Prawdopodobnie odpowiedni</td></tr>
-<tr><td data-label="Twórca"><strong>Kacper Rietz</strong></td><td data-label="Kategoria">Entertainment (komentarz TikToków/memów)</td><td class="rank-followers" data-label="Zasięgi (publiczne)">IG 141 448 · YT 1 110 000 · TT 218 562</td><td data-label="Management">StormMedia</td><td data-label="Ocena">🟡 Wymaga audytu</td></tr>
-<tr><td data-label="Twórca"><strong>Kuba Norek i Marlena Sojka</strong></td><td data-label="Kategoria">Motoryzacja / lifestyle</td><td class="no-data" data-label="Zasięgi (publiczne)">brak podanych zasięgów w katalogu — do potwierdzenia u agencji</td><td data-label="Management">GetHero</td><td data-label="Ocena">🟡 Wymaga audytu</td></tr>
-<tr><td data-label="Twórca"><strong>Kamil Owczarek</strong></td><td data-label="Kategoria">Lifestyle</td><td class="no-data" data-label="Zasięgi (publiczne)">brak podanych zasięgów w katalogu — do potwierdzenia u agencji</td><td data-label="Management">Spotlight Agency</td><td data-label="Ocena">🟡 Wymaga audytu</td></tr>
-<tr><td data-label="Twórca"><strong>Patrycja Mołczanow</strong></td><td data-label="Kategoria">Fashion / lifestyle</td><td class="no-data" data-label="Zasięgi (publiczne)">brak podanych zasięgów w katalogu — do potwierdzenia u agencji</td><td data-label="Management">Spotlight Agency</td><td data-label="Ocena">🟡 Wymaga audytu</td></tr>
-</tbody>
-</table>
-</div>
+<div class="creator-grid" id="creatorGrid"><div class="creator-tile"><div class="ct-name"><strong>Isamu</strong></div><div class="ct-cat">Entertainment</div><div class="ct-reach">YT 2 830 000 · IG 1 200 306 · TT 695 132</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Admiros</strong></div><div class="ct-cat">Gaming</div><div class="ct-reach">YT 2 420 000 · IG 90 521 · TT 466 492</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Karolek</strong></div><div class="ct-cat">Entertainment</div><div class="ct-reach">YT 2 300 000 · IG 555 490</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Millo</strong></div><div class="ct-cat">Lifestyle</div><div class="ct-reach">YT 1 890 000 · IG 160 734 · TT 355 931</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Yoshi</strong></div><div class="ct-cat">Lifestyle</div><div class="ct-reach">YT 1 740 000 · IG 521 643 · TT 423 810</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Zebo</strong></div><div class="ct-cat">Commentary</div><div class="ct-reach">YT 1 690 000</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-red">🔴 Podwyższone ryzyko</span></div><div class="creator-tile"><div class="ct-name"><strong>Niekryty Krytyk</strong></div><div class="ct-cat">Commentary</div><div class="ct-reach">YT 1 610 000 · IG 43 567 · TT 269</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-red">🔴 Podwyższone ryzyko</span></div><div class="creator-tile"><div class="ct-name"><strong>Lakarnum</strong></div><div class="ct-cat">Commentary</div><div class="ct-reach">YT 1 500 000 · IG 254 689 · TT 351 162</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-red">🔴 Podwyższone ryzyko</span></div><div class="creator-tile"><div class="ct-name"><strong>TOP10wszystkiego</strong></div><div class="ct-cat">Entertainment / rankingi</div><div class="ct-reach">YT 1 400 000</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>GilathissNew</strong></div><div class="ct-cat">Gaming</div><div class="ct-reach">YT 1 320 000 · IG 101 449</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Agnes Ratajczak</strong></div><div class="ct-cat">Comedy</div><div class="ct-reach">TikTok/IG/YouTube @agnesratajczak(offcial)</div><div class="ct-mgmt">🏢 InfluPartner</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Eliza Wolnik (Makeupelza)</strong></div><div class="ct-cat">Beauty</div><div class="ct-reach">TikTok/IG @makeupelza</div><div class="ct-mgmt">🏢 InfluPartner</div><span class="ct-badge badge-green">🟢 Prawdopodobnie odpowiedni</span></div><div class="creator-tile"><div class="ct-name"><strong>Kamila Cieśla (Soo Good Food)</strong></div><div class="ct-cat">Culinary</div><div class="ct-reach">TikTok/IG @soo.good.food · YT @soogoodfood</div><div class="ct-mgmt">🏢 InfluPartner</div><span class="ct-badge badge-green">🟢 Prawdopodobnie odpowiedni</span></div><div class="creator-tile"><div class="ct-name"><strong>A&amp;K Zieliniaki</strong></div><div class="ct-cat">Parenting</div><div class="ct-reach">TikTok @zieliniaki · IG @zieliniaki.official</div><div class="ct-mgmt">🏢 InfluPartner</div><span class="ct-badge badge-green">🟢 Prawdopodobnie odpowiedni*</span></div><div class="creator-tile"><div class="ct-name"><strong>Noemi Majchrzak</strong></div><div class="ct-cat">Lifestyle</div><div class="ct-reach">TikTok @noemimajchrzak1 · IG @noemimajchrzak</div><div class="ct-mgmt">🏢 InfluPartner</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>AdBuster</strong></div><div class="ct-cat">Testy / consumer / tech</div><div class="ct-reach no-data">roster StormMedia — zasięgi z media kitu</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Detailer</strong></div><div class="ct-cat">Motoryzacja / detailing</div><div class="ct-reach no-data">roster StormMedia — zasięgi z media kitu</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-green">🟢 Prawdopodobnie odpowiedni</span></div><div class="creator-tile"><div class="ct-name"><strong>Dla Pieniędzy</strong></div><div class="ct-cat">Finanse / biznes</div><div class="ct-reach no-data">roster StormMedia — zasięgi z media kitu</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu**</span></div><div class="creator-tile"><div class="ct-name"><strong>KamilEater</strong></div><div class="ct-cat">Food</div><div class="ct-reach no-data">roster StormMedia — zasięgi z media kitu</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-green">🟢 Prawdopodobnie odpowiedni</span></div><div class="creator-tile"><div class="ct-name"><strong>Snax</strong></div><div class="ct-cat">Gaming / esport</div><div class="ct-reach no-data">roster StormMedia — zasięgi z media kitu</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Tivolt</strong></div><div class="ct-cat">Gaming</div><div class="ct-reach no-data">roster StormMedia — zasięgi z media kitu</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Ziemniak</strong></div><div class="ct-cat">Tech / gaming / commentary</div><div class="ct-reach no-data">roster StormMedia — zasięgi z media kitu</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Żądny Przygód</strong></div><div class="ct-cat">Travel / adventure</div><div class="ct-reach no-data">roster StormMedia — zasięgi z media kitu</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-green">🟢 Prawdopodobnie odpowiedni</span></div><div class="creator-tile"><div class="ct-name"><strong>Brokies</strong></div><div class="ct-cat">Lifestyle / entertainment</div><div class="ct-reach">IG 277 398 · YT 162 000</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Palion</strong></div><div class="ct-cat">Gaming / młodzi odbiorcy</div><div class="ct-reach no-data">wymieniony w case study Rokmates — zasięgi do zapytania</div><div class="ct-mgmt">🏢 Rokmates</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu***</span></div><div class="creator-tile"><div class="ct-name"><strong>Klaudia Halejcio</strong></div><div class="ct-cat">Celebrity / lifestyle</div><div class="ct-reach">IG ok. 1,17 mln (patrz Top 100 wyżej)</div><div class="ct-mgmt">🏢 zależnie od kampanii, m.in. Rokmates</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Cezary Pazura</strong></div><div class="ct-cat">Aktor / celebrity</div><div class="ct-reach no-data">wymieniony w case study Rokmates — zasięgi do managera</div><div class="ct-mgmt">🏢 zależnie od kampanii, m.in. Rokmates</div><span class="ct-badge badge-green">🟢 Prawdopodobnie odpowiedni</span></div><div class="creator-tile"><div class="ct-name"><strong>Wujek Paolo</strong></div><div class="ct-cat">Lifestyle / kulinarne (pizza)</div><div class="ct-reach">IG 66 954 · YT 312 000 · TT 341 465</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-green">🟢 Prawdopodobnie odpowiedni</span></div><div class="creator-tile"><div class="ct-name"><strong>SzopDemaskuje</strong></div><div class="ct-cat">Commentary</div><div class="ct-reach">YT 161 000</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-red">🔴 Podwyższone ryzyko</span></div><div class="creator-tile"><div class="ct-name"><strong>Poskładanny</strong></div><div class="ct-cat">Entertainment (LEGO, family friendly)</div><div class="ct-reach">IG 12 387 · YT 458 000</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-green">🟢 Prawdopodobnie odpowiedni</span></div><div class="creator-tile"><div class="ct-name"><strong>Testree</strong></div><div class="ct-cat">Gaming / esport</div><div class="ct-reach">IG 22 032 · Twitch 125 955</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Andrew Gazda</strong></div><div class="ct-cat">Entertainment / fitness</div><div class="ct-reach">IG 191 326 · TT 786 557 · Twitch 7 700</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Bowi (Bożena Cisło)</strong></div><div class="ct-cat">Automotive</div><div class="ct-reach">IG 303 371 · YT 157 000 · TT 134 990</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-green">🟢 Prawdopodobnie odpowiedni</span></div><div class="creator-tile"><div class="ct-name"><strong>Kacper Rietz</strong></div><div class="ct-cat">Entertainment (komentarz TikToków/memów)</div><div class="ct-reach">IG 141 448 · YT 1 110 000 · TT 218 562</div><div class="ct-mgmt">🏢 StormMedia</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Kuba Norek i Marlena Sojka</strong></div><div class="ct-cat">Motoryzacja / lifestyle</div><div class="ct-reach no-data">brak podanych zasięgów w katalogu — do potwierdzenia u agencji</div><div class="ct-mgmt">🏢 GetHero</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Kamil Owczarek</strong></div><div class="ct-cat">Lifestyle</div><div class="ct-reach no-data">brak podanych zasięgów w katalogu — do potwierdzenia u agencji</div><div class="ct-mgmt">🏢 Spotlight Agency</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div><div class="creator-tile"><div class="ct-name"><strong>Patrycja Mołczanow</strong></div><div class="ct-cat">Fashion / lifestyle</div><div class="ct-reach no-data">brak podanych zasięgów w katalogu — do potwierdzenia u agencji</div><div class="ct-mgmt">🏢 Spotlight Agency</div><span class="ct-badge badge-yellow">🟡 Wymaga audytu</span></div></div>
 <p class="src" style="margin-top:12px;">* Parenting: przed kampanią zweryfikuj zasady wykorzystania wizerunku dzieci i zgody opiekunów. ** Finanse to kategoria wysokiej odpowiedzialności — wymagana weryfikacja prawna claimów. *** Duża atrakcyjność dla młodszych odbiorców — konieczna szczególna zgodność z zasadami reklamy kierowanej do dzieci.</p>
 <p class="src">Źródła: <a href="https://stormmedia.gg/pl/creators" target="_blank">stormmedia.gg/pl/creators</a> (w tym indywidualne podstrony twórców z dokładnymi zasięgami), <a href="https://influpartner.pl/" target="_blank">influpartner.pl</a>, <a href="https://rokmates.com/" target="_blank">rokmates.com</a>, <a href="https://gethero.pl/" target="_blank">gethero.pl</a>, <a href="https://pl.linkedin.com/company/spotlight-a" target="_blank">LinkedIn Spotlight Agency</a>. Roboczy katalog własny na podstawie tych źródeł, stan na 22.07.2026 — przed kampanią potwierdź aktualne zasięgi, dostępność i ocenę.</p>
 </div></div>
@@ -1214,14 +1277,13 @@
 <h2>🌟 Agencje gwiazd, celebrytów i impresariaty</h2>
 <p class="cat-desc">Osoby znane z telewizji, sportu, muzyki i show-biznesu — kampanie wizerunkowe, eventy, ambasadorstwo.</p>
 <div class="list">
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>Famous People®</h3>
 <div class="tag-row"><span class="tag">Agent gwiazd</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Agencja prowadzona przez Magdalenę Gatkowską (ok. 20 lat doświadczenia jako agentka/managerka gwiazd). Reprezentuje dziennikarzy, prezenterów, aktorów, a także influencerów i celebrytów.</p>
 <dl class="facts">
@@ -1236,14 +1298,13 @@
 <div class="src">Źródła: <a href="https://famouspeople.pl/agencja-znanych-osob/" target="_blank">famouspeople.pl</a>, <a href="https://famouspeople.pl/jak-znalezc-kontakt-do-znanej-osoby/" target="_blank">famouspeople.pl (kontakt)</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>Ministerstwo Gwiazd</h3>
 <div class="tag-row"><span class="tag">Impresariat celebrytów</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Impresariat z ponad 20-letnim doświadczeniem, organizujący udział gwiazd sportu, telewizji i estrady w eventach firmowych, galach oraz kampaniach reklamowych i wizerunkowych.</p>
 <dl class="facts">
@@ -1258,14 +1319,13 @@
 <div class="src">Źródło: <a href="https://ministerstwogwiazd.pl/" target="_blank">ministerstwogwiazd.pl</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>Personal Reactor</h3>
 <div class="tag-row"><span class="tag">Management talentów</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Agencja pomagająca nawiązać kontakt z rozpoznawalnymi twarzami telewizji i show-biznesu na potrzeby kampanii reklamowych i wizerunkowych.</p>
 <dl class="facts">
@@ -1280,14 +1340,13 @@
 <div class="src">Źródło: <a href="https://personalreactor.pl/management-gwiazd/" target="_blank">personalreactor.pl</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>L*Gwiazdy</h3>
 <div class="tag-row"><span class="tag">Agencja aktorska (od 1995)</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Jedna z najdłużej działających polskich agencji aktorskich (założona w 1995 r. przez Lucynę Kobierzycką), reprezentuje polskie gwiazdy filmowe i teatralne.</p>
 <dl class="facts">
@@ -1302,14 +1361,13 @@
 <div class="src">Źródło: <a href="https://www.l-gwiazdy.pl/en/" target="_blank">l-gwiazdy.pl</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>STARS Impresariat</h3>
 <div class="tag-row"><span class="tag">Casting / talenty reklamowe</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Duża agencja castingowa działająca od 20 lat, prowadzi bazę statystów i talentów reklamowych do filmów, seriali i reklam; powiązana agencja aktorska STELO obsługuje zlecenia dla aktorów. Studio castingowe w Warszawie.</p>
 <dl class="facts">
@@ -1331,14 +1389,13 @@
 <h2>👥 Agencje modelek, hostess i statystów</h2>
 <p class="cat-desc">Przydatne, gdy kampania potrzebuje twarzy do sesji zdjęciowej, hostessy na event lub statystów.</p>
 <div class="list">
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left">
 <h3>Infernal</h3>
 <div class="tag-row"><span class="tag">Modelki / hostessy / statyści</span></div>
 </div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Agencja działająca od 2011 r., prowadzi bazę modelek i modeli w różnym wieku, organizuje hostessy do działań reklamowych i eventowych oraz statystów.</p>
 <dl class="facts">
@@ -1359,40 +1416,36 @@
 <section class="category" id="jak-szukac">
 <h2>🧭 Inne sposoby na dotarcie do influencerów i gwiazd</h2>
 <div class="list">
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left"><h3>Katalogi branżowe agencji</h3></div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Serwisy <strong>influencer.pl</strong> i <strong>influmarketing.pl</strong> prowadzą aktualizowane listy agencji influencer marketingu w Polsce z opisem zakresu usług i danymi kontaktowymi.</p>
 <div class="src">Źródła: <a href="https://influencer.pl/agencje-influencer-marketing/strona-2" target="_blank">influencer.pl</a>, <a href="https://influmarketing.pl/" target="_blank">influmarketing.pl</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left"><h3>Bezpośredni kontakt z twórcą</h3></div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Wielu mniejszych i średnich influencerów podaje adres do współpracy biznesowej wprost w opisie profilu na Instagramie/TikToku/YouTube (etykieta „współpraca” / „biznes”). To najtańsza droga, ale bez wsparcia agencji przy negocjacjach i umowie.</p>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left"><h3>Wyszukiwarki i platformy międzynarodowe</h3></div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Serwisy takie jak <strong>Sortlist</strong> czy <strong>ensun.io</strong> zestawiają rankingi agencji influencer marketingu działających w Polsce (część z ocenami klientów).</p>
 <div class="src">Źródła: <a href="https://www.sortlist.com/s/influencer-marketing/poland-pl" target="_blank">sortlist.com</a>, <a href="https://ensun.io/search/influencer-marketing/poland" target="_blank">ensun.io</a></div>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left"><h3>6 dróg do kontaktu — krok po kroku</h3></div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc"><strong>1. Oficjalny management</strong> — najlepsza droga do gwiazd, dużych twórców i osób publicznych; management ustala dostępność, stawkę, prawa wizerunkowe i wyłączność.<br/><br/>
 <strong>2. Agencja influencer marketingu</strong> — dobra przy kampanii z wieloma twórcami naraz; agencja buduje shortlistę, negocjuje, podpisuje umowy, pilnuje publikacji i raportuje.<br/><br/>
@@ -1402,11 +1455,10 @@
 <strong>6. Booking aktorski / muzyczny / sportowy</strong> — gwiazdy spoza internetu często mają osobny booking koncertowy, aktorski, eventowy i reklamowy; zawsze pytaj o właściwy zakres.</p>
 </div></div>
 </div>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left"><h3>📧 Wzór pierwszego zapytania ofertowego</h3></div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Gotowy szkielet e-maila do agencji/managementu — wystarczy uzupełnić nawiasy kwadratowe.</p>
 <div class="contact-box" style="font-family:'Inter',sans-serif; white-space:pre-wrap; line-height:1.7;">Dzień dobry,
@@ -1449,11 +1501,10 @@ Pozdrawiam,
 <div class="rank-note" style="margin-top:16px;">
 <strong>Jawne informacje cenowe znalezione w źródłach:</strong> Reach a Blogger opublikował informację o 15% prowizji platformy (materiał z ok. 2020 r. — potwierdź aktualność przed zakupem). WhitePress podaje, że konto, wizytówka influencera i Strefa Ogłoszeń są bezpłatne, a koszty płatnych usług zależą od zamówienia. Modash publikuje cennik subskrypcji narzędzia — to nie jest cennik honorariów influencerów. W case study Rokmates dla marki Speakly podano średnie CPA na poziomie 3,91 zł — to wynik jednej konkretnej kampanii, a nie uniwersalna stawka rynkowa.
     </div>
-<div class="item" style="margin-top:16px;">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile" style="margin-top:16px;">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left"><h3>📊 Minimalny zestaw danych do porównania ofert</h3></div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">Przy porównywaniu dwóch lub więcej ofert warto zebrać dla każdego twórcy: cenę netto całej współpracy, średni zasięg/wyświetlenia danego formatu, CPM lub koszt dotarcia, engagement rate, demografię odbiorców, udział odbiorców z Polski, prawa do paid media, wyłączność, termin, liczbę poprawek i formę raportu.</p>
 </div></div>
@@ -1463,11 +1514,10 @@ Pozdrawiam,
 <section class="category" id="brand-safety">
 <h2>🛡️ Checklista brand safety i family friendly</h2>
 <p class="cat-desc">Zanim podpiszesz umowę z twórcą — niezależnie od tego, jak „bezpieczna” wydaje się kategoria — przejdź przez tę listę.</p>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left"><h3>✅ Lista kontrolna przed kampanią</h3></div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">
         ☐ Przejrzyj minimum 30 ostatnich publikacji i materiały z ostatnich 6–12 miesięcy.<br/>
@@ -1487,11 +1537,10 @@ Pozdrawiam,
 <!-- PRAWO I STANDARDY -->
 <section class="category" id="prawo">
 <h2>⚖️ Prawo i standardy</h2>
-<div class="item">
-<div class="item-head" onclick="toggleItem(this)">
+<div class="item tile">
+<div class="item-head" onclick="openTile(this.closest('.item'))">
 <div class="left"><h3>Oznaczanie reklamy i standard branżowy</h3></div>
-<svg class="chevron" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M6 9l6 6 6-6"></path></svg>
-</div>
+<span class="tile-close" onclick="event.stopPropagation(); closeTile();">✕</span></div>
 <div class="item-body"><div class="item-body-inner">
 <p class="desc">UOKiK wskazuje, że czytelne, jednoznaczne i zrozumiałe oznaczenie reklamy jest obowiązkiem influencera, agencji reklamowej i reklamodawcy. Urząd rekomenduje oznaczenie dwupoziomowe: funkcją platformy oraz we własnym zakresie, ze wskazaniem komercyjnego charakteru i promowanej marki.</p>
 <p class="desc">Od 15 kwietnia 2026 r. działa w Polsce Standard Jakości Profesjonalistów Influencer Marketingu przygotowany w ramach BRIM (przy IAB Polska). Przy wyborze partnera warto pytać, czy agencja lub osoba pracuje według tego standardu.</p>
@@ -1533,12 +1582,30 @@ Pozdrawiam,
 
   function filterCreators(){
     var q = document.getElementById('creatorSearch').value.trim().toLowerCase();
-    var rows = document.querySelectorAll('#creatorTable tbody tr');
-    rows.forEach(function(row){
-      var text = row.textContent.toLowerCase();
-      row.style.display = text.indexOf(q) !== -1 ? '' : 'none';
+    var tiles = document.querySelectorAll('#creatorGrid .creator-tile');
+    tiles.forEach(function(tile){
+      var text = tile.textContent.toLowerCase();
+      tile.style.display = text.indexOf(q) !== -1 ? '' : 'none';
     });
   }
+
+  function openTile(item){
+    if(!item) return;
+    document.querySelectorAll('.item.tile.expanded').forEach(function(el){ el.classList.remove('expanded'); });
+    item.classList.add('expanded');
+    document.getElementById('tileBackdrop').classList.add('show');
+    document.body.classList.add('modal-open');
+  }
+
+  function closeTile(){
+    document.querySelectorAll('.item.tile.expanded').forEach(function(el){ el.classList.remove('expanded'); });
+    document.getElementById('tileBackdrop').classList.remove('show');
+    document.body.classList.remove('modal-open');
+  }
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeTile();
+  });
 </script>
-</body>
+<div class="tile-backdrop" id="tileBackdrop" onclick="closeTile()"></div></body>
 </html>
